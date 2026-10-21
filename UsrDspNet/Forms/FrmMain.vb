@@ -2,6 +2,7 @@ Imports System.Data
 Imports System.Data.OleDb
 Imports System.Drawing
 Imports System.IO
+Imports System.Runtime.InteropServices
 Imports System.Text
 Imports System.Windows.Forms
 
@@ -17,15 +18,47 @@ Public Class FrmMain
     Private mntListForm As FrmMnt = Nothing
     Private mntFindForm As FrmMntFind = Nothing
 
-    Private Sub FrmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        fMainForm = Me
+    Private Const WM_SETICON As Integer = &H80
+    Private Const ICON_SMALL As Integer = 0
+    Private Const ICON_BIG As Integer = 1
+
+    <DllImport("user32.dll", CharSet:=CharSet.Auto)>
+    Private Shared Function SendMessage(ByVal hWnd As IntPtr, ByVal Msg As Integer, ByVal wParam As IntPtr, ByVal lParam As IntPtr) As IntPtr
+    End Function
+
+    Protected Overrides Sub OnHandleCreated(ByVal e As EventArgs)
+        MyBase.OnHandleCreated(e)
+        ApplyAppIcon(Me)
         Try
-            Dim icoPath As String = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "usrdsp.ico")
-            If File.Exists(icoPath) Then
-                Me.Icon = New Icon(icoPath)
+            Dim ico As Icon = GetAppIcon()
+            If ico IsNot Nothing Then
+                SendMessage(Me.Handle, WM_SETICON, New IntPtr(ICON_BIG), ico.Handle)
+                SendMessage(Me.Handle, WM_SETICON, New IntPtr(ICON_SMALL), ico.Handle)
             End If
         Catch
         End Try
+    End Sub
+
+    Protected Overrides Sub OnShown(ByVal e As EventArgs)
+        MyBase.OnShown(e)
+        Try
+            Dim ico As Icon = GetAppIcon()
+            If ico IsNot Nothing Then
+                SendMessage(Me.Handle, WM_SETICON, New IntPtr(ICON_BIG), ico.Handle)
+                SendMessage(Me.Handle, WM_SETICON, New IntPtr(ICON_SMALL), ico.Handle)
+            End If
+        Catch
+        End Try
+    End Sub
+
+    Public Sub New()
+        InitializeComponent()
+        ApplyAppIcon(Me)
+    End Sub
+
+    Private Sub FrmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        fMainForm = Me
+        ApplyAppIcon(Me)
 
         InitSettings()
 

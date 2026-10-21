@@ -1,11 +1,21 @@
+Imports System.Runtime.InteropServices
 Imports System.Threading
 Imports System.Windows.Forms
 
 Public Module Program
     Private appMutex As Mutex
 
+    <DllImport("shell32.dll", SetLastError:=True)>
+    Private Function SetCurrentProcessExplicitAppUserModelID(<MarshalAs(UnmanagedType.LPWStr)> ByVal AppID As String) As Integer
+    End Function
+
     <STAThread()>
     Public Sub Main()
+        Try
+            SetCurrentProcessExplicitAppUserModelID("Maple.UsrDspNet.App.1")
+        Catch
+        End Try
+
         Dim createdNew As Boolean = False
         appMutex = New Mutex(True, "UsrDspNet_SingleInstance_Mutex", createdNew)
         If Not createdNew Then

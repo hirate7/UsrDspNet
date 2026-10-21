@@ -14,6 +14,7 @@ Public Class FrmMnt
     Private IsLoading As Boolean = False
 
     Private Sub FrmMnt_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ApplyAppIcon(Me)
         IsLoading = True
         SetupGrid()
 

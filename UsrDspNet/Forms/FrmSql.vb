@@ -9,6 +9,7 @@ Public Class FrmSql
     Private _isInitializing As Boolean = False
 
     Private Sub FrmSql_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ApplyAppIcon(Me)
         MakeSql()
     End Sub
 

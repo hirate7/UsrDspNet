@@ -5,6 +5,10 @@ Public Class FindDlg
     Private prssBtn As Integer = 1
     Private Shared bfrFmode As Integer = -1
 
+    Private Sub FindDlg_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ApplyAppIcon(Me)
+    End Sub
+
     Private Sub FindDlg_Activated(sender As Object, e As EventArgs) Handles Me.Activated
         CmbFind.Focus()
         CmbFind.SelectAll()

@@ -459,4 +459,45 @@ Public Module MdlUsrdsp
         End If
         Return s
     End Function
+
+    Private _cachedAppIcon As Icon = Nothing
+
+    Public Function GetAppIcon() As Icon
+        If _cachedAppIcon IsNot Nothing Then Return _cachedAppIcon
+        Try
+            Dim asm As Reflection.Assembly = Reflection.Assembly.GetExecutingAssembly()
+            Using stream As Stream = asm.GetManifestResourceStream("UsrDspNet.usrdsp.ico")
+                If stream IsNot Nothing Then
+                    _cachedAppIcon = New Icon(stream)
+                    Return _cachedAppIcon
+                End If
+            End Using
+        Catch
+        End Try
+
+        Try
+            _cachedAppIcon = Icon.ExtractAssociatedIcon(Reflection.Assembly.GetExecutingAssembly().Location)
+            If _cachedAppIcon IsNot Nothing Then Return _cachedAppIcon
+        Catch
+        End Try
+
+        Try
+            Dim icoPath As String = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "usrdsp.ico")
+            If File.Exists(icoPath) Then
+                _cachedAppIcon = New Icon(icoPath)
+                Return _cachedAppIcon
+            End If
+        Catch
+        End Try
+
+        Return Nothing
+    End Function
+
+    Public Sub ApplyAppIcon(ByVal f As Form)
+        If f Is Nothing Then Return
+        Dim ico As Icon = GetAppIcon()
+        If ico IsNot Nothing Then
+            f.Icon = ico
+        End If
+    End Sub
 End Module

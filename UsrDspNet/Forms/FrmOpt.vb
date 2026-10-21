@@ -15,6 +15,7 @@ Public Class FrmOpt
     End Sub
 
     Private Sub FrmOpt_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ApplyAppIcon(Me)
         LoadOptionsToUi()
         If _initialTabIndex >= 0 AndAlso _initialTabIndex < tbsOpt.TabCount Then
             tbsOpt.SelectedIndex = _initialTabIndex

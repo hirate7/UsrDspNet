@@ -169,6 +169,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="usrdsp.ico" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="usrdsp.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
