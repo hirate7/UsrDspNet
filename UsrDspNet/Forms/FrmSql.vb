@@ -457,9 +457,9 @@ Public Class FrmSql
             Dim vupExe As String = Path.Combine(ProgramFilesFolder, "UsrDspM\VupLabel.exe")
             Dim vupExe86 As String = "C:\Program Files (x86)\UsrDspM\VupLabel.exe"
             If File.Exists(vupExe) Then
-                Process.Start(vupExe, """" & outPath & """")
+                Process.Start(vupExe, outPath)
             ElseIf File.Exists(vupExe86) Then
-                Process.Start(vupExe86, """" & outPath & """")
+                Process.Start(vupExe86, outPath)
             Else
                 MessageBox.Show("ラベルデータを出力しました:" & Environment.NewLine & outPath, "出力完了", MessageBoxButtons.OK, MessageBoxIcon.Information)
             End If
