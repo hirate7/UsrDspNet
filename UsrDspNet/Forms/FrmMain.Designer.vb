@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class FrmMain
     Inherits System.Windows.Forms.Form
 
@@ -54,6 +54,7 @@ Partial Class FrmMain
     Public WithEvents mnuPrtMntUsr As ToolStripMenuItem
     Public WithEvents mnuSepPrt2 As ToolStripSeparator
     Public WithEvents mnuVupLabel As ToolStripMenuItem
+    Public WithEvents mnuVupLabelExe As ToolStripMenuItem
 
     ' Top Toolbar Panel
     Public WithEvents pnlTopBar As Panel
@@ -96,6 +97,7 @@ Partial Class FrmMain
     Public WithEvents btnPrt1F As Button
     Public WithEvents btnPrt2F As Button
     Public WithEvents btnPrtOpt As Button
+    Public WithEvents btnListExport As Button
     Public WithEvents dgvPrt As DataGridView
 
     ' Left: User Detail Header + Tabs
@@ -301,7 +303,8 @@ Partial Class FrmMain
         Me.mnuPrtMntUsr = New ToolStripMenuItem("表示中ユーザーのカルテ・メンテ記録印刷(&M)...")
         Me.mnuSepPrt2 = New ToolStripSeparator()
         Me.mnuVupLabel = New ToolStripMenuItem("バージョンアップ用ラベル印刷・佐川CSV出力(&V)...")
-        Me.mnuPrt.DropDownItems.AddRange(New ToolStripItem() {Me.mnuPrtList, Me.mnuPrtEnv1, Me.mnuPrtEnv2, Me.mnuSepPrt1, Me.mnuPrtMntUsr, Me.mnuSepPrt2, Me.mnuVupLabel})
+        Me.mnuVupLabelExe = New ToolStripMenuItem("ラベル印刷 [VupLabel.exe] (&L)...")
+        Me.mnuPrt.DropDownItems.AddRange(New ToolStripItem() {Me.mnuPrtList, Me.mnuPrtEnv1, Me.mnuPrtEnv2, Me.mnuSepPrt1, Me.mnuPrtMntUsr, Me.mnuSepPrt2, Me.mnuVupLabel, Me.mnuVupLabelExe})
 
         Me.MenuStrip1.Items.AddRange(New ToolStripItem() {Me.mnuFile, Me.mnuView, Me.mnuSearch, Me.mnuMnt, Me.mnuPrt, Me.mnuOpt})
 
@@ -366,7 +369,8 @@ Partial Class FrmMain
         Me.btnPrt1F = New Button() With {.Text = "1F封筒", .Location = New Point(331, 3), .Size = New Size(58, 25), .UseVisualStyleBackColor = True}
         Me.btnPrt2F = New Button() With {.Text = "2F封筒", .Location = New Point(392, 3), .Size = New Size(58, 25), .UseVisualStyleBackColor = True}
         Me.btnPrtOpt = New Button() With {.Text = "印刷設定", .Location = New Point(453, 3), .Size = New Size(68, 25), .UseVisualStyleBackColor = True}
-        Me.pnlPrtTop.Controls.AddRange(New Control() {Me.lblPrtHeader, Me.btnPrtAdd, Me.btnPrtDel, Me.btnPrtAllDel, Me.btnPrtExec, Me.btnPrt1F, Me.btnPrt2F, Me.btnPrtOpt})
+        Me.btnListExport = New Button() With {.Location = New Point(527, 2), .Size = New Size(30, 27), .UseVisualStyleBackColor = True, .Cursor = Cursors.Hand}
+        Me.pnlPrtTop.Controls.AddRange(New Control() {Me.lblPrtHeader, Me.btnPrtAdd, Me.btnPrtDel, Me.btnPrtAllDel, Me.btnPrtExec, Me.btnPrt1F, Me.btnPrt2F, Me.btnPrtOpt, Me.btnListExport})
 
         Me.dgvPrt = New DataGridView() With {
             .Dock = DockStyle.Fill,
