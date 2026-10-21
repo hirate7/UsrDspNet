@@ -1435,52 +1435,52 @@ Public Class FrmMain
         End Try
 
         Try
-            Dim base64Str As String = _
-                "Qk04DAAAAAAAADYAAAAoAAAAIAAAACAAAAABABgAAAAAAAAAAAAgLgAAIC4AAAAAAAAAAAAAbk4qbk4qbk4qbk4qbk4q" & _
-                "bk4qbk4qbk4qbk4qbk4qbk4qbk4qbk4qbk4qbk4qbk4qbk4qbk4qbk4qbk4qbk4qbk4qbk4qbk4qbk4qbk4qbk4q" & _
-                "bk4qbk4qbk4qbk4qbk4qakomakomakomakomakomakomakomakomakomakomakombUsnbkwnb00ncE0ncE0ocE0ocE0n" & _
-                "b00nbkwnbUsnakomakomakomakomakomakomakomakomakomakomakomZ0UiZ0UijV8ujV8ujV8ujV8ujV8ujV8ujl8u" & _
-                "kWIvlGQwlmUxl2YxmWcymmgym2gym2gymmgymWcyl2YxlmUxlGQwkWIvjl8ujV8ujV8ujV8ujV8ujV8ujV8uZ0UiZ0Ui" & _
-                "Y0EdY0EdiFkoiFkoiFkoiFkoiFkoi1spj10qkV8rlGAslmItmGMtmmQum2Uum2Yum2Yum2UummQumGMtlmItlGAskV8r" & _
-                "j10qi1spiFkoiFkoiFkoiFkoiFkoY0EdY0EdYD0aYD0ahFQjhFQjhFQjhVQkoXZKo3dKpnhJp3lJqnpJq3pKrHpJrXtJ" & _
-                "rXtJrnxIrntHrXpHrHlHq3hFqXdFqHZEpXRDlWEtjFkmiVclhVQkhFQjhFQjhFQjYD0aYD0aYDwYYDwYg1Ihg1IhhFIi" & _
-                "wqB/1ryg1rqd1bmb1Lia07eX07WV07SU0rOR0bGQ0LGO0K+M0K6Lz66Jz6yIzquGzquFzaqE2baRuIxfjVckiFUjhFIi" & _
-                "g1Ihg1IhYDwYYDwYYDsXYDsXg1Egg1EgoXVK2MCln3dLn3dLn3dLn3dLn3dLn3dLn3dLn3dLn3dLn3dLn3dLn3dLn3dL" & _
-                "n3dLn3dLn3dLn3dLo3tQ0a2IqnpJjVciiFQhg1Egg1EgYDsXYDsXYDsXYDsXg1Efh1MgmGc24863t5Vxn3dLn3dLn3dL" & _
-                "n3dLn3dLn3dLn3dLn3dLn3dLn3dLn3dLn3dLn3dLn3dLn3dLn3dLn3dLr4hey6N6kVkijFYhh1Mgg1EfYDsXYDsXYDsW" & _
-                "YDsWhVIfilUgj1ghrX9Q0rSU1Lqfn3dLn3dLn3dLn3dLn3dLn3dLsYxlwqF9wqB8wZ97wZ95wZ54wJ13r4pgn3dLn3dL" & _
-                "n3dLxqJ8r39Oj1ghilUghVIfYDsWYDsWYDsVYDsViFQejVcfkVogl10isH9N2cOpn3dLn3dLn3dLn3dLn3dLn3dL0LOU" & _
-                "zZ5tzJ1szJxqy5tpyZlnyJhm062Ew6F7o3xQn3dLv5tzuo1ekVogjVcfiFQeYDsVYDsVYDsVYDsVilUfj1gglVwhml8i" & _
-                "s4JO28Ssn3dLn3dLn3dLn3dLn3dLn3dL1rqdxYlMuXIpuHIptnEotG8osm4nsG4rx5lo2bmXwJx207GOp3E5lVwhj1gg" & _
-                "ilUfYDsVYDsVYDsVYj0WjFYfklogmF0inWEjtoRQ3Mavn3dLn3dLn3dLn3dLn3dLn3dL1r2gyIxOvXQqvHQpunMpuXIptnAos24nr2snsnQ2" & _
-                "xJVkrnY8nWEjmF0iklogjFYfYj0WYDsVYTsVZD0WkFggllshnF8ioWIjuYVR3Miyn3dLn3dLn3dLn3dLn3dLn3dL2L6j" & _
-                "zI5PwnYqwHUqv3UqvnQpunIpt28otG0nr2smq2glpmUkoWIjnF8illshkFggZD0WYTsVYjsVZj4Wk1kgmFwhnmAipGQk" & _
-                "vIdT3cq1n3dLn3dLn3dLn3dLn3dLn3dL2cCmz5BRxXgrxXcrw3YqwXUqv3QpunEpt28os2wnrmomqWclpGQknmAimFwh" & _
-                "k1kgZj4WYjsVYjsVaD8XllognF0iomEjqGUkv4lU38y4n3dLn3dLn3dLn3dLn3dLn3dL2cKp05FSynkryXkrx3grxXcr" & _
-                "wnUqv3MpunAot24nsmsmrWglqGUkomEjnF0illogaD8XYjsVZDwVaT8Xl1ognV4ipGIjqmYkwYpV3867n3dLn3dLn3dL" & _
-                "n3dLn3dLn3dL2sSs1ZNUzHoszHosynkryHgrxXYqwXQpvXEpuW4otGwnr2kmqmYkpGIjnV4il1ogaT8XZDwVZTwVaj8X" & _
-                "mVshn18ipmIjrGYkw4tW4M++n3dLn3dLn3dLn3dLn3dLn3dL3Mav15RUz3ssznoszXkry3grx3YqxHQqwHIpu28ot2wn" & _
-                "smkmrGYkpmIjn18imVshaj8XZTwVdVAoe1QqsXk8uX4/wINCx4hE2KVv4dHAn3dLn3dLn3dLn3dLn3dLn3dL3Miy77Ny" & _
-                "76NS7qJR7aJR6qBQ555P4ppN3pdM2ZRK05BIzYxGx4hEwINCuX4/sXk8e1QqdVAodVApe1UrsXk+uH5Av4NDxohF2Kdx" & _
-                "4tPDn3dLn3dLn3dLn3dLn3dLn3dL3cq18LR076RT7qNT7KJS6qFS5p5Q4ptP3phN2JRL05FKzY1IxohFv4NDuH5AsXk+" & _
-                "e1UrdVApdVAqe1UssHk/t35Bv4RExolH2Kdz4tXFn3dLn3dLn3dLn3dLn3dLn3dL38y477V27qRV7aRV66JU6aFT5Z5S" & _
-                "4ZtQ3JhP15RN0pFLzI1JxolHv4REt35BsHk/e1UsdVAqc1AqelUsr3lAtn5CvYNFxIhH1qd049bHn3dLn3dLn3dLn3dL" & _
-                "n3dLn3dL38677rV47KRW66NW6aJV56BU455T35tR2pdQ1pVO0JBMyoxKxIhHvYNFtn5Cr3lAelUsc1Aqc1AqeFQsrXlA" & _
-                "tH5Cu4NFwodI1ad15NjKn3dLn3dLn3dLn3dLn3dLn3dL4M+97LV56aNW6KJW5qFV5J9U4Z1T3JpR2JdQ05NOzpBMyIxK" & _
-                "wodIu4NFtH5CrXlAeFQsc1Aqc1ErdlMsqnhAsX1DuIJGvoZI1Kl65djMn3dLn3dLn3dLn3dLn3dLn3dL28m27MCP5aFX" & _
-                "46BW4p9V4J5V3JtT2JhS1JZQz5JOyo5MxIpKvoZIuIJGsX1DqnhAdlMsc1Erc1EsdVItp3ZBrntDtYBG4suy7OPavKCC" & _
-                "n3dLn3dLn3dLn3dLn3dLn3dLsI5p5tnK7s2r4KBa3Z1W25tV2JlU1JZSz5NQy5BPxoxNwIhLu4RItYBGrntDp3ZBdVIt" & _
-                "c1EsclItclItpHVBqnlDwJZp7eXcn3dLn3dLn3dLn3dLn3dLn3dLn3dLn3dLn3dL0buk58CW2JtW1plV05dU0JRSzJFR" & _
-                "x45PwopNvYdLt4NJsX5GqnlDpHVBclItclItclIuclIuoHNBpndDtoxc8+7oq4hin3dLn3dLn3dLn3dLn3dLn3dLn3dL" & _
-                "n3dLpX9V3cy54LSE1JhV0ZZUzpRTy5FSx49QwotOvYhMuIRKs4BIrHxFpndDoHNBclIuclIucVIvcVIvnXFBo3VDqXlF" & _
-                "1Lqd9e/o//////7+/v38/vz7/fv5/fr3/Pn2+/j0+PDo5simz5VVzpRVzJNUyZFTxY5RwYtQvYhOuIVMs4FKr35IqXlF" & _
-                "o3VDnXFBcVIvcVIvcFIvcFIvmnBAnnNCo3dFqXxHrn9JsoJLt4VNu4hOv4tQw45SxZBTxpFTyJJUyZNUyZNUyJJUxpFT" & _
-                "xZBTw45Sv4tQu4hOt4VNsoJLrn9JqXxHo3dFnnNCmnBAcFIvcFIvcFIwcFIwmXBCmXBCn3REpHhGqXxIrX9KsYJMtYVO" & _
-                "uYhPvIpRv4xSwY1Two5Tw49Uw49Uwo5TwY1Tv4xSvIpRuYhPtYVOsYJMrX9KqXxIpHhGn3REmXBCmXBCcFIwcFIwb1Iw" & _
-                "b1IwmHBCmHBCmXFDnnRFo3hHqHxJrH5LsIFMsoNOtYVPuIhQuolRu4pRvIpSvIpSu4pRuolRuIhQtYVPsoNOsIFMrH5L" & _
-                "qHxJo3hHnnRFmXFDmHBCmHBCb1Iwb1Iwb1Ixb1Ixb1Ixb1Ixb1IxcFIxc1UydVc0eFk1e1o2fV03gF44gWA5g2A6g2E6" & _
-                "hGE6hGE6g2E6g2A6gWA5gF44fV03e1o2eFk1dVc0c1UycFIxb1Ixb1Ixb1Ixb1Ixb1IxblIyblIyblIyblIyblIyblIy" & _
-                "blIycVQydFY0dlg1eFk2elo3e1w3fV04fV04fl04fl04fV04fV04e1w3elo3eFk2dlg1dFY0cVQyblIyblIyblIyblIy" & _
+            Dim base64Str As String =
+                "Qk04DAAAAAAAADYAAAAoAAAAIAAAACAAAAABABgAAAAAAAAAAAAgLgAAIC4AAAAAAAAAAAAAbk4qbk4qbk4qbk4qbk4q" &
+                "bk4qbk4qbk4qbk4qbk4qbk4qbk4qbk4qbk4qbk4qbk4qbk4qbk4qbk4qbk4qbk4qbk4qbk4qbk4qbk4qbk4qbk4q" &
+                "bk4qbk4qbk4qbk4qbk4qakomakomakomakomakomakomakomakomakomakomakombUsnbkwnb00ncE0ncE0ocE0ocE0n" &
+                "b00nbkwnbUsnakomakomakomakomakomakomakomakomakomakomakomZ0UiZ0UijV8ujV8ujV8ujV8ujV8ujV8ujl8u" &
+                "kWIvlGQwlmUxl2YxmWcymmgym2gym2gymmgymWcyl2YxlmUxlGQwkWIvjl8ujV8ujV8ujV8ujV8ujV8ujV8uZ0UiZ0Ui" &
+                "Y0EdY0EdiFkoiFkoiFkoiFkoiFkoi1spj10qkV8rlGAslmItmGMtmmQum2Uum2Yum2Yum2UummQumGMtlmItlGAskV8r" &
+                "j10qi1spiFkoiFkoiFkoiFkoiFkoY0EdY0EdYD0aYD0ahFQjhFQjhFQjhVQkoXZKo3dKpnhJp3lJqnpJq3pKrHpJrXtJ" &
+                "rXtJrnxIrntHrXpHrHlHq3hFqXdFqHZEpXRDlWEtjFkmiVclhVQkhFQjhFQjhFQjYD0aYD0aYDwYYDwYg1Ihg1IhhFIi" &
+                "wqB/1ryg1rqd1bmb1Lia07eX07WV07SU0rOR0bGQ0LGO0K+M0K6Lz66Jz6yIzquGzquFzaqE2baRuIxfjVckiFUjhFIi" &
+                "g1Ihg1IhYDwYYDwYYDsXYDsXg1Egg1EgoXVK2MCln3dLn3dLn3dLn3dLn3dLn3dLn3dLn3dLn3dLn3dLn3dLn3dLn3dL" &
+                "n3dLn3dLn3dLn3dLo3tQ0a2IqnpJjVciiFQhg1Egg1EgYDsXYDsXYDsXYDsXg1Efh1MgmGc24863t5Vxn3dLn3dLn3dL" &
+                "n3dLn3dLn3dLn3dLn3dLn3dLn3dLn3dLn3dLn3dLn3dLn3dLn3dLn3dLr4hey6N6kVkijFYhh1Mgg1EfYDsXYDsXYDsW" &
+                "YDsWhVIfilUgj1ghrX9Q0rSU1Lqfn3dLn3dLn3dLn3dLn3dLn3dLsYxlwqF9wqB8wZ97wZ95wZ54wJ13r4pgn3dLn3dL" &
+                "n3dLxqJ8r39Oj1ghilUghVIfYDsWYDsWYDsVYDsViFQejVcfkVogl10isH9N2cOpn3dLn3dLn3dLn3dLn3dLn3dL0LOU" &
+                "zZ5tzJ1szJxqy5tpyZlnyJhm062Ew6F7o3xQn3dLv5tzuo1ekVogjVcfiFQeYDsVYDsVYDsVYDsVilUfj1gglVwhml8i" &
+                "s4JO28Ssn3dLn3dLn3dLn3dLn3dLn3dL1rqdxYlMuXIpuHIptnEotG8osm4nsG4rx5lo2bmXwJx207GOp3E5lVwhj1gg" &
+                "ilUfYDsVYDsVYDsVYj0WjFYfklogmF0inWEjtoRQ3Mavn3dLn3dLn3dLn3dLn3dLn3dL1r2gyIxOvXQqvHQpunMpuXIptnAos24nr2snsnQ2" &
+                "xJVkrnY8nWEjmF0iklogjFYfYj0WYDsVYTsVZD0WkFggllshnF8ioWIjuYVR3Miyn3dLn3dLn3dLn3dLn3dLn3dL2L6j" &
+                "zI5PwnYqwHUqv3UqvnQpunIpt28otG0nr2smq2glpmUkoWIjnF8illshkFggZD0WYTsVYjsVZj4Wk1kgmFwhnmAipGQk" &
+                "vIdT3cq1n3dLn3dLn3dLn3dLn3dLn3dL2cCmz5BRxXgrxXcrw3YqwXUqv3QpunEpt28os2wnrmomqWclpGQknmAimFwh" &
+                "k1kgZj4WYjsVYjsVaD8XllognF0iomEjqGUkv4lU38y4n3dLn3dLn3dLn3dLn3dLn3dL2cKp05FSynkryXkrx3grxXcr" &
+                "wnUqv3MpunAot24nsmsmrWglqGUkomEjnF0illogaD8XYjsVZDwVaT8Xl1ognV4ipGIjqmYkwYpV3867n3dLn3dLn3dL" &
+                "n3dLn3dLn3dL2sSs1ZNUzHoszHosynkryHgrxXYqwXQpvXEpuW4otGwnr2kmqmYkpGIjnV4il1ogaT8XZDwVZTwVaj8X" &
+                "mVshn18ipmIjrGYkw4tW4M++n3dLn3dLn3dLn3dLn3dLn3dL3Mav15RUz3ssznoszXkry3grx3YqxHQqwHIpu28ot2wn" &
+                "smkmrGYkpmIjn18imVshaj8XZTwVdVAoe1QqsXk8uX4/wINCx4hE2KVv4dHAn3dLn3dLn3dLn3dLn3dLn3dL3Miy77Ny" &
+                "76NS7qJR7aJR6qBQ555P4ppN3pdM2ZRK05BIzYxGx4hEwINCuX4/sXk8e1QqdVAodVApe1UrsXk+uH5Av4NDxohF2Kdx" &
+                "4tPDn3dLn3dLn3dLn3dLn3dLn3dL3cq18LR076RT7qNT7KJS6qFS5p5Q4ptP3phN2JRL05FKzY1IxohFv4NDuH5AsXk+" &
+                "e1UrdVApdVAqe1UssHk/t35Bv4RExolH2Kdz4tXFn3dLn3dLn3dLn3dLn3dLn3dL38y477V27qRV7aRV66JU6aFT5Z5S" &
+                "4ZtQ3JhP15RN0pFLzI1JxolHv4REt35BsHk/e1UsdVAqc1AqelUsr3lAtn5CvYNFxIhH1qd049bHn3dLn3dLn3dLn3dL" &
+                "n3dLn3dL38677rV47KRW66NW6aJV56BU455T35tR2pdQ1pVO0JBMyoxKxIhHvYNFtn5Cr3lAelUsc1Aqc1AqeFQsrXlA" &
+                "tH5Cu4NFwodI1ad15NjKn3dLn3dLn3dLn3dLn3dLn3dL4M+97LV56aNW6KJW5qFV5J9U4Z1T3JpR2JdQ05NOzpBMyIxK" &
+                "wodIu4NFtH5CrXlAeFQsc1Aqc1ErdlMsqnhAsX1DuIJGvoZI1Kl65djMn3dLn3dLn3dLn3dLn3dLn3dL28m27MCP5aFX" &
+                "46BW4p9V4J5V3JtT2JhS1JZQz5JOyo5MxIpKvoZIuIJGsX1DqnhAdlMsc1Erc1EsdVItp3ZBrntDtYBG4suy7OPavKCC" &
+                "n3dLn3dLn3dLn3dLn3dLn3dLsI5p5tnK7s2r4KBa3Z1W25tV2JlU1JZSz5NQy5BPxoxNwIhLu4RItYBGrntDp3ZBdVIt" &
+                "c1EsclItclItpHVBqnlDwJZp7eXcn3dLn3dLn3dLn3dLn3dLn3dLn3dLn3dLn3dL0buk58CW2JtW1plV05dU0JRSzJFR" &
+                "x45PwopNvYdLt4NJsX5GqnlDpHVBclItclItclIuclIuoHNBpndDtoxc8+7oq4hin3dLn3dLn3dLn3dLn3dLn3dLn3dL" &
+                "n3dLpX9V3cy54LSE1JhV0ZZUzpRTy5FSx49QwotOvYhMuIRKs4BIrHxFpndDoHNBclIuclIucVIvcVIvnXFBo3VDqXlF" &
+                "1Lqd9e/o//////7+/v38/vz7/fv5/fr3/Pn2+/j0+PDo5simz5VVzpRVzJNUyZFTxY5RwYtQvYhOuIVMs4FKr35IqXlF" &
+                "o3VDnXFBcVIvcVIvcFIvcFIvmnBAnnNCo3dFqXxHrn9JsoJLt4VNu4hOv4tQw45SxZBTxpFTyJJUyZNUyZNUyJJUxpFT" &
+                "xZBTw45Sv4tQu4hOt4VNsoJLrn9JqXxHo3dFnnNCmnBAcFIvcFIvcFIwcFIwmXBCmXBCn3REpHhGqXxIrX9KsYJMtYVO" &
+                "uYhPvIpRv4xSwY1Two5Tw49Uw49Uwo5TwY1Tv4xSvIpRuYhPtYVOsYJMrX9KqXxIpHhGn3REmXBCmXBCcFIwcFIwb1Iw" &
+                "b1IwmHBCmHBCmXFDnnRFo3hHqHxJrH5LsIFMsoNOtYVPuIhQuolRu4pRvIpSvIpSu4pRuolRuIhQtYVPsoNOsIFMrH5L" &
+                "qHxJo3hHnnRFmXFDmHBCmHBCb1Iwb1Iwb1Ixb1Ixb1Ixb1Ixb1IxcFIxc1UydVc0eFk1e1o2fV03gF44gWA5g2A6g2E6" &
+                "hGE6hGE6g2E6g2A6gWA5gF44fV03e1o2eFk1dVc0c1UycFIxb1Ixb1Ixb1Ixb1Ixb1IxblIyblIyblIyblIyblIyblIy" &
+                "blIycVQydFY0dlg1eFk2elo3e1w3fV04fV04fl04fl04fV04fV04e1w3elo3eFk2dlg1dFY0cVQyblIyblIyblIyblIy" &
                 "blIyblIyblIyAAA="
             Dim b() As Byte = Convert.FromBase64String(base64Str)
             Using ms As New MemoryStream(b)
@@ -1591,7 +1591,7 @@ Public Class FrmMain
                     Next
                 End Using
 
-                Process.Start(exePath, """" & fName & """")
+                Process.Start(exePath, fName)
             Catch ex As Exception
                 MessageBox.Show("ラベルデータ出力または VupLabel.exe 起動中にエラーが発生しました:" & Environment.NewLine & ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End Try
