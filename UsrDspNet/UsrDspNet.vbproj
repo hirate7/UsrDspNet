@@ -169,6 +169,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\FrmMain.resx">
+      <DependentUpon>FrmMain.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FrmSql.resx">
       <DependentUpon>FrmSql.vb</DependentUpon>
     </EmbeddedResource>
