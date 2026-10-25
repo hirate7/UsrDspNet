@@ -2331,7 +2331,7 @@ Partial Class FrmMain
         '
         'btnPrtAdd
         '
-        Me.btnPrtAdd.Location = New System.Drawing.Point(98, 3)
+        Me.btnPrtAdd.Location = New System.Drawing.Point(126, 4)
         Me.btnPrtAdd.Name = "btnPrtAdd"
         Me.btnPrtAdd.Size = New System.Drawing.Size(52, 25)
         Me.btnPrtAdd.TabIndex = 1
@@ -2340,7 +2340,7 @@ Partial Class FrmMain
         '
         'btnPrtDel
         '
-        Me.btnPrtDel.Location = New System.Drawing.Point(153, 3)
+        Me.btnPrtDel.Location = New System.Drawing.Point(181, 4)
         Me.btnPrtDel.Name = "btnPrtDel"
         Me.btnPrtDel.Size = New System.Drawing.Size(52, 25)
         Me.btnPrtDel.TabIndex = 2
@@ -2349,7 +2349,7 @@ Partial Class FrmMain
         '
         'btnPrtAllDel
         '
-        Me.btnPrtAllDel.Location = New System.Drawing.Point(208, 3)
+        Me.btnPrtAllDel.Location = New System.Drawing.Point(236, 4)
         Me.btnPrtAllDel.Name = "btnPrtAllDel"
         Me.btnPrtAllDel.Size = New System.Drawing.Size(58, 25)
         Me.btnPrtAllDel.TabIndex = 3
@@ -2359,7 +2359,7 @@ Partial Class FrmMain
         'btnPrtExec
         '
         Me.btnPrtExec.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.5!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.btnPrtExec.Location = New System.Drawing.Point(272, 3)
+        Me.btnPrtExec.Location = New System.Drawing.Point(300, 4)
         Me.btnPrtExec.Name = "btnPrtExec"
         Me.btnPrtExec.Size = New System.Drawing.Size(56, 25)
         Me.btnPrtExec.TabIndex = 4
@@ -2368,7 +2368,7 @@ Partial Class FrmMain
         '
         'btnPrt1F
         '
-        Me.btnPrt1F.Location = New System.Drawing.Point(331, 3)
+        Me.btnPrt1F.Location = New System.Drawing.Point(359, 4)
         Me.btnPrt1F.Name = "btnPrt1F"
         Me.btnPrt1F.Size = New System.Drawing.Size(58, 25)
         Me.btnPrt1F.TabIndex = 5
@@ -2377,7 +2377,7 @@ Partial Class FrmMain
         '
         'btnPrt2F
         '
-        Me.btnPrt2F.Location = New System.Drawing.Point(392, 3)
+        Me.btnPrt2F.Location = New System.Drawing.Point(420, 4)
         Me.btnPrt2F.Name = "btnPrt2F"
         Me.btnPrt2F.Size = New System.Drawing.Size(58, 25)
         Me.btnPrt2F.TabIndex = 6
@@ -2386,7 +2386,7 @@ Partial Class FrmMain
         '
         'btnPrtOpt
         '
-        Me.btnPrtOpt.Location = New System.Drawing.Point(453, 3)
+        Me.btnPrtOpt.Location = New System.Drawing.Point(481, 4)
         Me.btnPrtOpt.Name = "btnPrtOpt"
         Me.btnPrtOpt.Size = New System.Drawing.Size(68, 25)
         Me.btnPrtOpt.TabIndex = 7
@@ -2396,7 +2396,7 @@ Partial Class FrmMain
         'btnListExport
         '
         Me.btnListExport.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btnListExport.Location = New System.Drawing.Point(527, 2)
+        Me.btnListExport.Location = New System.Drawing.Point(555, 3)
         Me.btnListExport.Name = "btnListExport"
         Me.btnListExport.Size = New System.Drawing.Size(30, 27)
         Me.btnListExport.TabIndex = 8

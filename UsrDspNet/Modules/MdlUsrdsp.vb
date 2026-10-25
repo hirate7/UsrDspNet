@@ -15,8 +15,22 @@ Public Module MdlUsrdsp
 
     Public fMainForm As FrmMain
 
+    ''' <summary>
+    ''' Mpl.mdb
+    ''' ユーザーデータ
+    ''' </summary>
     Public CnMplMdb As OleDbConnection
+
+    ''' <summary>
+    ''' Mnt.mdb
+    ''' メンテナンス記録
+    ''' </summary>
     Public CnMntMdb As OleDbConnection
+
+    ''' <summary>
+    ''' Prt.mdb
+    ''' 印刷リスト記録
+    ''' </summary>
     Public CnPrtMdb As OleDbConnection
 
     Public MplDBActive As Boolean
