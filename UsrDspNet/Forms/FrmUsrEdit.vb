@@ -55,8 +55,8 @@ Public Class FrmUsrEdit
                 OldZip = NulCut(r("〒"))
                 OldAd1 = NulCut(r("住所1"))
                 OldAd2 = NulCut(r("住所2"))
-                OldSinryou = NulCut(r("診療時間"))
-                OldMemo = NulCut(r("備考"))
+                OldSinryou = CutCR(NulCut(r("診療時間")))
+                OldMemo = CutCR(NulCut(r("備考")))
             End If
         Catch ex As Exception
             MessageBox.Show("ユーザー情報の取得に失敗しました: " & ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
@@ -145,6 +145,29 @@ Public Class FrmUsrEdit
         End Using
     End Sub
 
+    ''' <summary>
+    ''' 診療時間・備考のテキストボックスでEnterキーによる改行挿入を抑止
+    ''' </summary>
+    Private Sub txtNoEnter_KeyDown(sender As Object, e As KeyEventArgs) Handles txtSinryou.KeyDown, txtMemo.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' 貼り付け等で改行文字（CR/LF）が混入した場合に半角スペースへ自動変換
+    ''' </summary>
+    Private Sub txtNoNewline_TextChanged(sender As Object, e As EventArgs) Handles txtSinryou.TextChanged, txtMemo.TextChanged
+        Dim tb As TextBox = TryCast(sender, TextBox)
+        If tb Is Nothing Then Return
+        If tb.Text.Contains(vbCr) OrElse tb.Text.Contains(vbLf) Then
+            Dim selStart As Integer = tb.SelectionStart
+            Dim newText As String = tb.Text.Replace(vbCrLf, " ").Replace(vbCr, " ").Replace(vbLf, " ")
+            tb.Text = newText
+            tb.SelectionStart = Math.Min(selStart, tb.Text.Length)
+        End If
+    End Sub
+
     Private Sub btnOk_Click(sender As Object, e As EventArgs) Handles btnOk.Click
         If Not ValidateUserLockForSave(TargetCode, Me) Then Return
         If ModeDbLocation = CnModeLocal Then
@@ -162,8 +185,8 @@ Public Class FrmUsrEdit
         Dim zip As String = TrimX(txtZip.Text)
         Dim ad1 As String = TrimX(txtAd1.Text)
         Dim ad2 As String = TrimX(txtAd2.Text)
-        Dim sinryou As String = TrimX(txtSinryou.Text)
-        Dim memo As String = TrimX(txtMemo.Text)
+        Dim sinryou As String = TrimX(CutCR(txtSinryou.Text))
+        Dim memo As String = TrimX(CutCR(txtMemo.Text))
 
         Dim changed As Boolean = (ver <> OldVer) OrElse (sibu <> OldSibu) OrElse
                                  (tel <> OldTel) OrElse (sjName <> OldSjName) OrElse (sjNameF <> OldSjNameF) OrElse
