@@ -25,8 +25,6 @@ Partial Class FrmPMemo
     Friend WithEvents lblMes As Label
     Friend WithEvents cmdWrite As Button
     Friend WithEvents cmdCancel As Button
-    Friend WithEvents btnHistory As Button
-    Friend WithEvents lblTantoInfo As Label
 
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
@@ -39,8 +37,6 @@ Partial Class FrmPMemo
         Me.lblMes = New Label()
         Me.cmdWrite = New Button()
         Me.cmdCancel = New Button()
-        Me.btnHistory = New Button()
-        Me.lblTantoInfo = New Label()
         Me.pnlTop.SuspendLayout()
         Me.pnlBottom.SuspendLayout()
         Me.SuspendLayout()
@@ -101,16 +97,8 @@ Partial Class FrmPMemo
         Me.cmdCancel.Location = New Point(460, 8)
         Me.cmdCancel.Size = New Size(108, 32)
         Me.cmdCancel.Anchor = AnchorStyles.Top Or AnchorStyles.Right
-        Me.btnHistory.Text = "修正履歴(&H)..."
-        Me.btnHistory.Location = New Point(10, 8)
-        Me.btnHistory.Size = New Size(110, 32)
 
-        Me.lblTantoInfo.AutoSize = True
-        Me.lblTantoInfo.ForeColor = SystemColors.GrayText
-        Me.lblTantoInfo.Location = New Point(126, 17)
-        Me.lblTantoInfo.Text = "担当: 未設定"
-
-        Me.pnlBottom.Controls.AddRange(New Control() {Me.lblMes, Me.cmdWrite, Me.cmdCancel, Me.btnHistory, Me.lblTantoInfo})
+        Me.pnlBottom.Controls.AddRange(New Control() {Me.lblMes, Me.cmdWrite, Me.cmdCancel})
 
         Me.Controls.Add(Me.txtPmemo)
         Me.Controls.Add(Me.pnlTop)

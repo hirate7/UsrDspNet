@@ -23,6 +23,8 @@ Partial Class FrmMemoEdit
     Friend WithEvents lblLocalWarn As Label
     Friend WithEvents cmdWrite As Button
     Friend WithEvents cmdCancel As Button
+    Friend WithEvents btnHistory As Button
+    Friend WithEvents lblTantoInfo As Label
 
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
@@ -33,6 +35,8 @@ Partial Class FrmMemoEdit
         Me.lblLocalWarn = New Label()
         Me.cmdWrite = New Button()
         Me.cmdCancel = New Button()
+        Me.btnHistory = New Button()
+        Me.lblTantoInfo = New Label()
         Me.pnlTop.SuspendLayout()
         Me.pnlBottom.SuspendLayout()
         Me.SuspendLayout()
@@ -65,9 +69,18 @@ Partial Class FrmMemoEdit
 
         Me.lblLocalWarn.Text = "※ローカルモードでは書き込みできません"
         Me.lblLocalWarn.ForeColor = Color.Red
-        Me.lblLocalWarn.Location = New Point(12, 14)
-        Me.lblLocalWarn.Size = New Size(280, 22)
+        Me.lblLocalWarn.Location = New Point(230, 14)
+        Me.lblLocalWarn.Size = New Size(260, 22)
         Me.lblLocalWarn.Visible = False
+
+        Me.btnHistory.Text = "修正履歴(&H)..."
+        Me.btnHistory.Location = New Point(10, 8)
+        Me.btnHistory.Size = New Size(110, 32)
+
+        Me.lblTantoInfo.AutoSize = True
+        Me.lblTantoInfo.ForeColor = SystemColors.GrayText
+        Me.lblTantoInfo.Location = New Point(126, 17)
+        Me.lblTantoInfo.Text = "担当: 未設定"
 
         Me.cmdWrite.Text = "書き込み終了(&W)"
         Me.cmdWrite.Font = New Font("MS UI Gothic", 9.75!, FontStyle.Bold)
@@ -80,7 +93,7 @@ Partial Class FrmMemoEdit
         Me.cmdCancel.Size = New Size(110, 32)
         Me.cmdCancel.Anchor = AnchorStyles.Top Or AnchorStyles.Right
 
-        Me.pnlBottom.Controls.AddRange(New Control() {Me.lblLocalWarn, Me.cmdWrite, Me.cmdCancel})
+        Me.pnlBottom.Controls.AddRange(New Control() {Me.lblLocalWarn, Me.cmdWrite, Me.cmdCancel, Me.btnHistory, Me.lblTantoInfo})
 
         Me.Controls.Add(Me.txtMemo)
         Me.Controls.Add(Me.pnlTop)
