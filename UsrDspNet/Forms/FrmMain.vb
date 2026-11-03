@@ -1166,10 +1166,12 @@ Public Class FrmMain
             If dlg.LoadUserInfo(currentCode, $"{currentCode}  {txtSjName.Text}") Then
                 If dlg.ShowDialog(Me) = DialogResult.OK Then
                 DisplayUserDetails(currentCode)
+                dgvUsr.Invalidate()
                 ' 一覧グリッドの該当行の表示も更新
                 Dim cleanTarget As String = GetNumAlp(currentCode)
                 For Each row As DataGridViewRow In dgvUsr.Rows
                     If GetNumAlp(NulCut(row.Cells("コード").Value)) = cleanTarget Then
+                        If dgvUsr.Columns.Contains("削除") Then row.Cells("削除").Value = dlg.SelectedDel
                         If dgvUsr.Columns.Contains("支部名") Then row.Cells("支部名").Value = txtSibu.Text
                         If dgvUsr.Columns.Contains("施術所名") Then row.Cells("施術所名").Value = txtSjName.Text
                         If dgvUsr.Columns.Contains("柔整師名") Then row.Cells("柔整師名").Value = txtJsName.Text
@@ -1195,6 +1197,7 @@ Public Class FrmMain
             If dlg.LoadKisyuInfo(currentCode, $"{currentCode}  {txtSjName.Text}") Then
                 If dlg.ShowDialog(Me) = DialogResult.OK Then
                     DisplayUserDetails(currentCode)
+                dgvUsr.Invalidate()
                 End If
             End If
         End Using

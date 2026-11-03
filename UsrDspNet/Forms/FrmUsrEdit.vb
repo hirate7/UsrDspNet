@@ -6,6 +6,9 @@ Imports System.Windows.Forms
 Public Class FrmUsrEdit
     Private TargetCode As String = ""
 
+    Public Property SelectedDel As String = "1"
+
+    Private OldDel As String = "1"
     Private OldVer As String = ""
     Private OldSibu As String = ""
     Private OldTel As String = ""
@@ -45,6 +48,8 @@ Public Class FrmUsrEdit
 
             If dt IsNot Nothing AndAlso dt.Rows.Count > 0 Then
                 Dim r As DataRow = dt.Rows(0)
+                OldDel = TrimX(NulCut(r("削除")))
+                If OldDel <> "2" AndAlso OldDel <> "3" Then OldDel = "1"
                 OldVer = NulCut(r("分院Version"))
                 OldSibu = NulCut(r("支部名"))
                 OldTel = NulCut(r("電話番号"))
@@ -62,6 +67,16 @@ Public Class FrmUsrEdit
             MessageBox.Show("ユーザー情報の取得に失敗しました: " & ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
         End Try
 
+        Select Case OldDel
+            Case "2"
+                rdoDel2.Checked = True
+            Case "3"
+                rdoDel3.Checked = True
+            Case Else
+                rdoDel1.Checked = True
+        End Select
+
+        SelectedDel = OldDel
         cmbVer.Text = OldVer
         cmbSibu.Text = OldSibu
         txtTel.Text = OldTel
@@ -108,6 +123,7 @@ Public Class FrmUsrEdit
     End Sub
 
     Private Sub UpdateUserOnConnection(ByVal cn As OleDbConnection,
+                                       ByVal del As String,
                                        ByVal ver As String, ByVal sibu As String,
                                        ByVal tel As String, ByVal sjName As String, ByVal sjNameF As String,
                                        ByVal jsName As String, ByVal jsNameF As String,
@@ -119,6 +135,7 @@ Public Class FrmUsrEdit
         EnsureRrkColumn(cn)
 
         Dim sql As String = "UPDATE ユーザーデータ SET " &
+            "[削除] = ?, " &
             "[分院Version] = ?, [支部名] = ?, " &
             "[電話番号] = ?, [施術所名] = ?, [施術所ﾌﾘｶﾞﾅ] = ?, " &
             "[柔整師名] = ?, [フリガナ] = ?, " &
@@ -127,6 +144,7 @@ Public Class FrmUsrEdit
             "WHERE [コード] = ?"
 
         Using cmd As New OleDbCommand(sql, cn)
+            cmd.Parameters.Add("del", OleDbType.VarWChar).Value = ToDbStr(del)
             cmd.Parameters.Add("ver", OleDbType.VarWChar).Value = ToDbStr(ver)
             cmd.Parameters.Add("sibu", OleDbType.VarWChar).Value = ToDbStr(sibu)
             cmd.Parameters.Add("tel", OleDbType.VarWChar).Value = ToDbStr(tel)
@@ -175,6 +193,7 @@ Public Class FrmUsrEdit
             Return
         End If
 
+        Dim del As String = If(rdoDel2.Checked, "2", If(rdoDel3.Checked, "3", "1"))
         Dim ver As String = TrimX(cmbVer.Text)
         Dim sibu As String = TrimX(cmbSibu.Text)
         Dim tel As String = TrimX(txtTel.Text)
@@ -188,7 +207,7 @@ Public Class FrmUsrEdit
         Dim sinryou As String = TrimX(CutCR(txtSinryou.Text))
         Dim memo As String = TrimX(CutCR(txtMemo.Text))
 
-        Dim changed As Boolean = (ver <> OldVer) OrElse (sibu <> OldSibu) OrElse
+        Dim changed As Boolean = (del <> OldDel) OrElse (ver <> OldVer) OrElse (sibu <> OldSibu) OrElse
                                  (tel <> OldTel) OrElse (sjName <> OldSjName) OrElse (sjNameF <> OldSjNameF) OrElse
                                  (jsName <> OldJsName) OrElse (jsNameF <> OldJsNameF) OrElse
                                  (zip <> OldZip) OrElse (ad1 <> OldAd1) OrElse (ad2 <> OldAd2) OrElse
@@ -196,6 +215,16 @@ Public Class FrmUsrEdit
 
         If changed Then
             Dim changes As New List(Of UsrRrkChange)()
+            If del <> OldDel Then
+                Dim delName As Func(Of String, String) = Function(d)
+                    Select Case d
+                        Case "2" : Return "2:削除"
+                        Case "3" : Return "3:一時休止"
+                        Case Else : Return "1:通常"
+                    End Select
+                End Function
+                AddChangeIfDifferent(changes, "削除区分", delName(OldDel), delName(del))
+            End If
             AddChangeIfDifferent(changes, "Ver", OldVer, ver)
             AddChangeIfDifferent(changes, "支部名", OldSibu, sibu)
             AddChangeIfDifferent(changes, "TEL", OldTel, tel)
@@ -228,12 +257,13 @@ Public Class FrmUsrEdit
                 If ModeDbLocation = CnModeNet AndAlso CheckNetworkFileExists(OptionNtMplMdb, 1500) Then
                     Using cnNt As New OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source='" & OptionNtMplMdb & "';")
                         cnNt.Open()
-                        UpdateUserOnConnection(cnNt, ver, sibu, tel, sjName, sjNameF, jsName, jsNameF, zip, ad1, ad2, sinryou, memo, newHistoryJson)
+                        UpdateUserOnConnection(cnNt, del, ver, sibu, tel, sjName, sjNameF, jsName, jsNameF, zip, ad1, ad2, sinryou, memo, newHistoryJson)
                     End Using
                 End If
 
-                UpdateUserOnConnection(CnMplMdb, ver, sibu, tel, sjName, sjNameF, jsName, jsNameF, zip, ad1, ad2, sinryou, memo, newHistoryJson)
+                UpdateUserOnConnection(CnMplMdb, del, ver, sibu, tel, sjName, sjNameF, jsName, jsNameF, zip, ad1, ad2, sinryou, memo, newHistoryJson)
 
+                SelectedDel = del
                 Me.DialogResult = DialogResult.OK
             Catch ex As Exception
                 MessageBox.Show("ユーザー情報の更新に失敗しました: " & ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
