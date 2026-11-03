@@ -19,8 +19,9 @@ Public Class FrmUsrEdit
     Private OldSinryou As String = ""
     Private OldMemo As String = ""
 
-    Public Sub LoadUserInfo(ByVal code As String, ByVal userTitle As String)
+    Public Function LoadUserInfo(ByVal code As String, ByVal userTitle As String) As Boolean
         TargetCode = GetNumAlp(code)
+        If Not CheckAndAcquireUserLock(TargetCode, Me) Then Return False
         lblUser.Text = userTitle
         lblTantoInfo.Text = If(String.IsNullOrWhiteSpace(OptionDefaultSyainName), "担当: 未設定", $"担当: {OptionDefaultSyainName}")
 
@@ -73,7 +74,8 @@ Public Class FrmUsrEdit
         txtAd2.Text = OldAd2
         txtSinryou.Text = OldSinryou
         txtMemo.Text = OldMemo
-    End Sub
+        Return True
+    End Function
 
     ''' <summary>
     ''' mpl.mdbから指定カラムの既存データを重複無くソートしてコンボボックスに設定
@@ -144,6 +146,7 @@ Public Class FrmUsrEdit
     End Sub
 
     Private Sub btnOk_Click(sender As Object, e As EventArgs) Handles btnOk.Click
+        If Not ValidateUserLockForSave(TargetCode, Me) Then Return
         If ModeDbLocation = CnModeLocal Then
             MessageBox.Show("ローカルモードでは更新できません。", "確認", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Return
@@ -218,6 +221,10 @@ Public Class FrmUsrEdit
         End If
 
         Me.Close()
+    End Sub
+
+    Private Sub FrmUsrEdit_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
+        ReleaseUserLock(TargetCode)
     End Sub
 
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click

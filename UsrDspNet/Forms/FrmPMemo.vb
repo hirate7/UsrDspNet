@@ -7,8 +7,9 @@ Public Class FrmPMemo
     Private TargetCode As String = ""
     Private OldPMemo As String = ""
 
-    Public Sub LoadPMemo(ByVal code As String, ByVal userTitle As String)
+    Public Function LoadPMemo(ByVal code As String, ByVal userTitle As String) As Boolean
         TargetCode = GetNumAlp(code)
+        If Not CheckAndAcquireUserLock(TargetCode, Me) Then Return False
         lblUser.Text = userTitle
         lblTantoInfo.Text = If(String.IsNullOrWhiteSpace(OptionDefaultSyainName), "担当: 未設定", $"担当: {OptionDefaultSyainName}")
         txtPmemo.Text = ""
@@ -31,7 +32,8 @@ Public Class FrmPMemo
         Else
             lblMes.Visible = False
         End If
-    End Sub
+        Return True
+    End Function
 
     Private Sub cmdClear_Click(sender As Object, e As EventArgs) Handles cmdClear.Click
         txtPmemo.Text = ""
@@ -56,6 +58,7 @@ Public Class FrmPMemo
     End Sub
 
     Private Sub cmdWrite_Click(sender As Object, e As EventArgs) Handles cmdWrite.Click
+        If Not ValidateUserLockForSave(TargetCode, Me) Then Return
         If ModeDbLocation = CnModeLocal Then
             MessageBox.Show("ローカルモードでは無効です", "確認", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Return
@@ -104,6 +107,10 @@ Public Class FrmPMemo
             End Try
         End If
         Me.Close()
+    End Sub
+
+    Private Sub FrmPMemo_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
+        ReleaseUserLock(TargetCode)
     End Sub
 
     Private Sub cmdCancel_Click(sender As Object, e As EventArgs) Handles cmdCancel.Click

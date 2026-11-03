@@ -15,8 +15,9 @@ Public Class FrmEtc
     Private OldGmap3 As String = ""
     Private OldVupType As Integer = 0
 
-    Public Sub LoadEtcInfo(ByVal code As String, ByVal userTitle As String)
+    Public Function LoadEtcInfo(ByVal code As String, ByVal userTitle As String) As Boolean
         TargetCode = GetNumAlp(code)
+        If Not CheckAndAcquireUserLock(TargetCode, Me) Then Return False
         lblUser.Text = userTitle
         lblTantoInfo.Text = If(String.IsNullOrWhiteSpace(OptionDefaultSyainName), "担当: 未設定", $"担当: {OptionDefaultSyainName}")
         grpGmapLink.Visible = OptionUseGmapLink
@@ -82,7 +83,8 @@ Public Class FrmEtc
         OldGmap2 = g2
         OldGmap3 = g3
         OldVupType = vupN
-    End Sub
+        Return True
+    End Function
 
     Private Sub SetRadioIndex(ByVal radios() As RadioButton, ByVal index As Integer)
         If index >= 0 AndAlso index < radios.Length Then
@@ -186,6 +188,7 @@ Public Class FrmEtc
     End Sub
 
     Private Sub cmdOk_Click(sender As Object, e As EventArgs) Handles cmdOk.Click
+        If Not ValidateUserLockForSave(TargetCode, Me) Then Return
         If ModeDbLocation = CnModeLocal Then
             MessageBox.Show("ローカルモードでは無効です", "確認", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Return
@@ -234,6 +237,10 @@ Public Class FrmEtc
         End If
 
         Me.Close()
+    End Sub
+
+    Private Sub FrmEtc_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
+        ReleaseUserLock(TargetCode)
     End Sub
 
     Private Sub cmdCancel_Click(sender As Object, e As EventArgs) Handles cmdCancel.Click

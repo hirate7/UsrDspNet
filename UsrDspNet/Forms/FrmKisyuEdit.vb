@@ -19,8 +19,9 @@ Public Class FrmKisyuEdit
     Private OldMiniPrt0 As String = ""
     Private OldMiniPrt1 As String = ""
 
-    Public Sub LoadKisyuInfo(ByVal code As String, ByVal userTitle As String)
+    Public Function LoadKisyuInfo(ByVal code As String, ByVal userTitle As String) As Boolean
         TargetCode = GetNumAlp(code)
+        If Not CheckAndAcquireUserLock(TargetCode, Me) Then Return False
         lblUser.Text = userTitle
         lblTantoInfo.Text = If(String.IsNullOrWhiteSpace(OptionDefaultSyainName), "担当: 未設定", $"担当: {OptionDefaultSyainName}")
 
@@ -84,7 +85,8 @@ Public Class FrmKisyuEdit
         txtHdd1.Text = OldHdd1
         cmbMiniPrt0.Text = OldMiniPrt0
         txtMiniPrt1.Text = OldMiniPrt1
-    End Sub
+        Return True
+    End Function
 
     ''' <summary>
     ''' テーブルに必要なカラムが存在するか確認し、なければ追加
@@ -194,6 +196,7 @@ Public Class FrmKisyuEdit
     End Sub
 
     Private Sub btnOk_Click(sender As Object, e As EventArgs) Handles btnOk.Click
+        If Not ValidateUserLockForSave(TargetCode, Me) Then Return
         If ModeDbLocation = CnModeLocal Then
             MessageBox.Show("ローカルモードでは更新できません。", "確認", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Return
@@ -269,6 +272,10 @@ Public Class FrmKisyuEdit
         End If
 
         Me.Close()
+    End Sub
+
+    Private Sub FrmKisyuEdit_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
+        ReleaseUserLock(TargetCode)
     End Sub
 
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click

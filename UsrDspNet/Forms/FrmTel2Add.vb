@@ -9,8 +9,9 @@ Public Class FrmTel2Add
     Private OldTelEx(4) As String
     Private TelBoxes() As TextBox
 
-    Public Sub LoadTelEx(ByVal code As String, ByVal userTitle As String)
+    Public Function LoadTelEx(ByVal code As String, ByVal userTitle As String) As Boolean
         TargetCode = GetNumAlp(code)
+        If Not CheckAndAcquireUserLock(TargetCode, Me) Then Return False
         lblUser.Text = userTitle
         lblTantoInfo.Text = If(String.IsNullOrWhiteSpace(OptionDefaultSyainName), "担当: 未設定", $"担当: {OptionDefaultSyainName}")
         TelBoxes = New TextBox() {txtTelEx0, txtTelEx1, txtTelEx2, txtTelEx3, txtTelEx4}
@@ -47,7 +48,8 @@ Public Class FrmTel2Add
         For i As Integer = 0 To 4
             OldTelEx(i) = TrimX(TelBoxes(i).Text)
         Next
-    End Sub
+        Return True
+    End Function
 
     Private Sub UpsertTelExOnConnection(ByVal cn As OleDbConnection)
         If cn Is Nothing Then Return
@@ -96,6 +98,7 @@ Public Class FrmTel2Add
     End Sub
 
     Private Sub cmdOk_Click(sender As Object, e As EventArgs) Handles cmdOk.Click
+        If Not ValidateUserLockForSave(TargetCode, Me) Then Return
         If ModeDbLocation = CnModeLocal Then
             MessageBox.Show("ローカルモードでは無効です", "確認", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Return
@@ -135,6 +138,10 @@ Public Class FrmTel2Add
         End If
 
         Me.Close()
+    End Sub
+
+    Private Sub FrmTel2Add_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
+        ReleaseUserLock(TargetCode)
     End Sub
 
     Private Sub cmdCancel_Click(sender As Object, e As EventArgs) Handles cmdCancel.Click

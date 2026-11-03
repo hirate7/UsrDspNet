@@ -1160,8 +1160,8 @@ Public Class FrmMain
         If String.IsNullOrWhiteSpace(currentCode) Then Return
 
         Using dlg As New FrmUsrEdit()
-            dlg.LoadUserInfo(currentCode, $"{currentCode}  {txtSjName.Text}")
-            If dlg.ShowDialog(Me) = DialogResult.OK Then
+            If dlg.LoadUserInfo(currentCode, $"{currentCode}  {txtSjName.Text}") Then
+                If dlg.ShowDialog(Me) = DialogResult.OK Then
                 DisplayUserDetails(currentCode)
                 ' 一覧グリッドの該当行の表示も更新
                 Dim cleanTarget As String = GetNumAlp(currentCode)
@@ -1174,6 +1174,7 @@ Public Class FrmMain
                         Exit For
                     End If
                 Next
+                End If
             End If
         End Using
     End Sub
@@ -1188,9 +1189,10 @@ Public Class FrmMain
         If String.IsNullOrWhiteSpace(currentCode) Then Return
 
         Using dlg As New FrmKisyuEdit()
-            dlg.LoadKisyuInfo(currentCode, $"{currentCode}  {txtSjName.Text}")
-            If dlg.ShowDialog(Me) = DialogResult.OK Then
-                DisplayUserDetails(currentCode)
+            If dlg.LoadKisyuInfo(currentCode, $"{currentCode}  {txtSjName.Text}") Then
+                If dlg.ShowDialog(Me) = DialogResult.OK Then
+                    DisplayUserDetails(currentCode)
+                End If
             End If
         End Using
     End Sub
@@ -1390,9 +1392,10 @@ Public Class FrmMain
     Private Sub OpenPMemoEditor(sender As Object, e As EventArgs) Handles btnEditPMemo.Click, lblPMemoBadge.Click, txtPcPMemo.DoubleClick
         If String.IsNullOrWhiteSpace(currentCode) Then Return
         Using dlg As New FrmPMemo()
-            dlg.LoadPMemo(currentCode, GetCurrentUserBannerTitle())
-            If dlg.ShowDialog(Me) = DialogResult.OK Then
-                PMemoCheck(currentCode)
+            If dlg.LoadPMemo(currentCode, GetCurrentUserBannerTitle()) Then
+                If dlg.ShowDialog(Me) = DialogResult.OK Then
+                    PMemoCheck(currentCode)
+                End If
             End If
         End Using
     End Sub
@@ -1400,9 +1403,10 @@ Public Class FrmMain
     Private Sub OpenTelExEditor(sender As Object, e As EventArgs) Handles btnTelExEdit.Click, txtTelEx0.DoubleClick, txtTelEx1.DoubleClick, txtTelEx2.DoubleClick, txtTelEx3.DoubleClick, txtTelEx4.DoubleClick
         If String.IsNullOrWhiteSpace(currentCode) Then Return
         Using dlg As New FrmTel2Add()
-            dlg.LoadTelEx(currentCode, GetCurrentUserBannerTitle())
-            If dlg.ShowDialog(Me) = DialogResult.OK Then
-                TelExDsp(currentCode)
+            If dlg.LoadTelEx(currentCode, GetCurrentUserBannerTitle()) Then
+                If dlg.ShowDialog(Me) = DialogResult.OK Then
+                    TelExDsp(currentCode)
+                End If
             End If
         End Using
     End Sub
@@ -1410,9 +1414,10 @@ Public Class FrmMain
     Private Sub OpenEtcInfoEditor(sender As Object, e As EventArgs) Handles lblImeBadge.Click, lblInputBadge.Click, lblNetBadge.Click, lblClickBadge.Click
         If String.IsNullOrWhiteSpace(currentCode) Then Return
         Using dlg As New FrmEtc()
-            dlg.LoadEtcInfo(currentCode, GetCurrentUserBannerTitle())
-            If dlg.ShowDialog(Me) = DialogResult.OK Then
-                DisplayUserByCode(currentCode, False)
+            If dlg.LoadEtcInfo(currentCode, GetCurrentUserBannerTitle()) Then
+                If dlg.ShowDialog(Me) = DialogResult.OK Then
+                    DisplayUserByCode(currentCode, False)
+                End If
             End If
         End Using
     End Sub

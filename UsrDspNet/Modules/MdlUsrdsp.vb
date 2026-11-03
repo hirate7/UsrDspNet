@@ -248,6 +248,7 @@ Public Module MdlUsrdsp
             CnMplMdb.Open()
             EnsureVupTypeColumn(CnMplMdb)
             EnsureRrkColumn(CnMplMdb)
+            EnsureLockColumns(CnMplMdb)
         Catch ex As Exception
             MplDBActive = False
             MessageBox.Show(OptionLcMplMdb & " に接続できません。" & Environment.NewLine & ex.Message, "DB Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -260,6 +261,7 @@ Public Module MdlUsrdsp
                     cnNtMpl.Open()
                     EnsureVupTypeColumn(cnNtMpl)
                     EnsureRrkColumn(cnNtMpl)
+                    EnsureLockColumns(cnNtMpl)
                 End Using
             Catch
             End Try

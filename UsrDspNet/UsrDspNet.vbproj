@@ -81,6 +81,7 @@
     <Compile Include="Modules\MdlUsrdsp.vb" />
     <Compile Include="Modules\MdlPrt.vb" />
     <Compile Include="Modules\MdlUsrRrk.vb" />
+    <Compile Include="Modules\MdlUsrLock.vb" />
     <Compile Include="Forms\FindDlg.Designer.vb">
       <DependentUpon>FindDlg.vb</DependentUpon>
     </Compile>
