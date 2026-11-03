@@ -18,8 +18,11 @@ Public Module Program
 
         Dim allowMulti As Boolean = False
         Try
-            Dim s As String = Microsoft.VisualBasic.Interaction.GetSetting("UsrDspNet", "Options", "AllowMultiInstance", "False")
-            Boolean.TryParse(s, allowMulti)
+            Dim s As String = Microsoft.VisualBasic.Interaction.GetSetting(AppTitleReg, "Options", "AllowMultiInstance", "False")
+            If Not Boolean.TryParse(s, allowMulti) OrElse Not allowMulti Then
+                Dim s2 As String = Microsoft.VisualBasic.Interaction.GetSetting("UsrDspNet", "Options", "AllowMultiInstance", "False")
+                Boolean.TryParse(s2, allowMulti)
+            End If
         Catch
         End Try
 
