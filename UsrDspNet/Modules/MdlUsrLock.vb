@@ -90,7 +90,7 @@ Module MdlUsrLock
                 ' 1. 現在のロック状況を確認
                 Dim sqlCheck As String = "SELECT LockPC, LockUser, LockTime FROM ユーザーデータ WHERE [コード] = ?"
                 Using cmdCheck As New OleDbCommand(sqlCheck, cn)
-                    cmdCheck.Parameters.AddWithValue("?", cleanCode)
+                    cmdCheck.Parameters.Add("?", OleDbType.VarWChar).Value = cleanCode
                     Using dr As OleDbDataReader = cmdCheck.ExecuteReader()
                         If dr.Read() Then
                             Dim curPc As String = If(dr.IsDBNull(0), "", dr.GetString(0))
@@ -109,15 +109,16 @@ Module MdlUsrLock
                 End Using
 
                 ' 2. 空、自PC、または1時間経過している場合、アトミックに条件付き更新でロックを取得
+                ' Jet 4.0 では DateTime 型パラメータを明示的に OleDbType.Date で指定する必要がある
                 Dim sqlAcquire As String = "UPDATE ユーザーデータ SET LockPC = ?, LockUser = ?, LockTime = ? " &
                                           "WHERE [コード] = ? AND (LockPC IS NULL OR LockPC = '' OR LockPC = ? OR LockTime IS NULL OR LockTime <= ?)"
                 Using cmdAcquire As New OleDbCommand(sqlAcquire, cn)
-                    cmdAcquire.Parameters.AddWithValue("?", myPc)
-                    cmdAcquire.Parameters.AddWithValue("?", myUser)
-                    cmdAcquire.Parameters.AddWithValue("?", nowTime)
-                    cmdAcquire.Parameters.AddWithValue("?", cleanCode)
-                    cmdAcquire.Parameters.AddWithValue("?", myPc)
-                    cmdAcquire.Parameters.AddWithValue("?", timeoutThreshold)
+                    cmdAcquire.Parameters.Add("?", OleDbType.VarWChar).Value = myPc
+                    cmdAcquire.Parameters.Add("?", OleDbType.VarWChar).Value = myUser
+                    cmdAcquire.Parameters.Add("?", OleDbType.Date).Value = nowTime
+                    cmdAcquire.Parameters.Add("?", OleDbType.VarWChar).Value = cleanCode
+                    cmdAcquire.Parameters.Add("?", OleDbType.VarWChar).Value = myPc
+                    cmdAcquire.Parameters.Add("?", OleDbType.Date).Value = timeoutThreshold
 
                     Dim rowsAffected As Integer = cmdAcquire.ExecuteNonQuery()
                     If rowsAffected > 0 Then
@@ -125,7 +126,7 @@ Module MdlUsrLock
                     Else
                         ' 0件の場合、直前に他者が先にロックを取得した
                         Using cmdRecheck As New OleDbCommand(sqlCheck, cn)
-                            cmdRecheck.Parameters.AddWithValue("?", cleanCode)
+                            cmdRecheck.Parameters.Add("?", OleDbType.VarWChar).Value = cleanCode
                             Using dr As OleDbDataReader = cmdRecheck.ExecuteReader()
                                 If dr.Read() Then
                                     Dim curPc As String = If(dr.IsDBNull(0), "", dr.GetString(0))
@@ -161,10 +162,10 @@ Module MdlUsrLock
             Using cn As OleDbConnection = GetLockConnection()
                 Dim sql As String = "UPDATE ユーザーデータ SET LockPC = ?, LockUser = ?, LockTime = ? WHERE [コード] = ?"
                 Using cmd As New OleDbCommand(sql, cn)
-                    cmd.Parameters.AddWithValue("?", myPc)
-                    cmd.Parameters.AddWithValue("?", myUser)
-                    cmd.Parameters.AddWithValue("?", nowTime)
-                    cmd.Parameters.AddWithValue("?", cleanCode)
+                    cmd.Parameters.Add("?", OleDbType.VarWChar).Value = myPc
+                    cmd.Parameters.Add("?", OleDbType.VarWChar).Value = myUser
+                    cmd.Parameters.Add("?", OleDbType.Date).Value = nowTime
+                    cmd.Parameters.Add("?", OleDbType.VarWChar).Value = cleanCode
                     cmd.ExecuteNonQuery()
                 End Using
             End Using
@@ -222,8 +223,8 @@ Module MdlUsrLock
                 Dim sql As String = "UPDATE ユーザーデータ SET LockPC = NULL, LockUser = NULL, LockTime = NULL " &
                                    "WHERE [コード] = ? AND LockPC = ?"
                 Using cmd As New OleDbCommand(sql, cn)
-                    cmd.Parameters.AddWithValue("?", cleanCode)
-                    cmd.Parameters.AddWithValue("?", myPc)
+                    cmd.Parameters.Add("?", OleDbType.VarWChar).Value = cleanCode
+                    cmd.Parameters.Add("?", OleDbType.VarWChar).Value = myPc
                     cmd.ExecuteNonQuery()
                 End Using
             End Using
@@ -247,7 +248,7 @@ Module MdlUsrLock
             Using cn As OleDbConnection = GetLockConnection()
                 Dim sql As String = "SELECT LockPC, LockUser, LockTime FROM ユーザーデータ WHERE [コード] = ?"
                 Using cmd As New OleDbCommand(sql, cn)
-                    cmd.Parameters.AddWithValue("?", cleanCode)
+                    cmd.Parameters.Add("?", OleDbType.VarWChar).Value = cleanCode
                     Using dr As OleDbDataReader = cmd.ExecuteReader()
                         If dr.Read() Then
                             Dim curPc As String = If(dr.IsDBNull(0), "", dr.GetString(0))
