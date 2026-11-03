@@ -16,11 +16,22 @@ Public Module Program
         Catch
         End Try
 
+        Dim allowMulti As Boolean = False
+        Try
+            Dim s As String = Microsoft.VisualBasic.Interaction.GetSetting("UsrDspNet", "Options", "AllowMultiInstance", "False")
+            Boolean.TryParse(s, allowMulti)
+        Catch
+        End Try
+
         Dim createdNew As Boolean = False
         appMutex = New Mutex(True, "UsrDspNet_SingleInstance_Mutex", createdNew)
         If Not createdNew Then
-            MessageBox.Show("すでにユーザー検索（UsrDspNet）が起動しています。", "確認", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            Return
+            If allowMulti Then
+                IsSecondaryInstance = True
+            Else
+                MessageBox.Show("すでにユーザー検索（UsrDspNet）が起動しています。", "確認", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Return
+            End If
         End If
 
         Application.EnableVisualStyles()

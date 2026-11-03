@@ -29,6 +29,7 @@ Public Class FrmOpt
         TxtNtMntMdb.Text = OptionNtMntMdb
         TxtLcPrtMdb.Text = OptionLcPrtMdb
         chkAutoCopyMntMdb.Checked = OptionAutoCopyDb
+        chkAllowMultiInstance.Checked = OptionAllowMultiInstance
         ' 社員マスター読込
         cmbDefaultSyain.Items.Clear()
         cmbDefaultSyain.Items.Add(New SyainComboItem("", "（未設定）"))
@@ -184,6 +185,8 @@ Public Class FrmOpt
         ' Tab 1: 起動時自動コピー
         OptionAutoCopyDb = chkAutoCopyMntMdb.Checked
         SaveSetting(AppTitleReg, "Settings", "chkAutoCopyMntMdb", If(OptionAutoCopyDb, "1", "0"))
+        OptionAllowMultiInstance = chkAllowMultiInstance.Checked
+        SaveSetting(AppTitleReg, "Options", "AllowMultiInstance", If(OptionAllowMultiInstance, "True", "False"))
         Dim selSyain As SyainComboItem = TryCast(cmbDefaultSyain.SelectedItem, SyainComboItem)
         If selSyain IsNot Nothing AndAlso selSyain.Code <> "" Then
             OptionDefaultSyainCode = selSyain.Code

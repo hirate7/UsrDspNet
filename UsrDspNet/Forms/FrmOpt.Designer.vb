@@ -33,6 +33,7 @@ Partial Class FrmOpt
     Public WithEvents lblLcPrt As System.Windows.Forms.Label
     Public WithEvents TxtLcPrtMdb As System.Windows.Forms.TextBox
     Public WithEvents chkAutoCopyMntMdb As System.Windows.Forms.CheckBox
+    Public WithEvents chkAllowMultiInstance As System.Windows.Forms.CheckBox
     Public WithEvents lblDefaultSyain As System.Windows.Forms.Label
     Public WithEvents cmbDefaultSyain As System.Windows.Forms.ComboBox
 
@@ -121,6 +122,7 @@ Partial Class FrmOpt
         Me.lblLcPrt = New System.Windows.Forms.Label()
         Me.TxtLcPrtMdb = New System.Windows.Forms.TextBox()
         Me.chkAutoCopyMntMdb = New System.Windows.Forms.CheckBox()
+        Me.chkAllowMultiInstance = New System.Windows.Forms.CheckBox()
         Me.lblDefaultSyain = New System.Windows.Forms.Label()
         Me.cmbDefaultSyain = New System.Windows.Forms.ComboBox()
 
@@ -225,6 +227,7 @@ Partial Class FrmOpt
         '
         Me.tabMain.Controls.Add(Me.grpDb)
         Me.tabMain.Controls.Add(Me.chkAutoCopyMntMdb)
+        Me.tabMain.Controls.Add(Me.chkAllowMultiInstance)
         Me.tabMain.Controls.Add(Me.lblDefaultSyain)
         Me.tabMain.Controls.Add(Me.cmbDefaultSyain)
         Me.tabMain.Location = New System.Drawing.Point(4, 23)
@@ -286,6 +289,14 @@ Partial Class FrmOpt
         Me.chkAutoCopyMntMdb.TabIndex = 1
         Me.chkAutoCopyMntMdb.Text = "起動時にローカルデータを更新する"
         Me.chkAutoCopyMntMdb.UseVisualStyleBackColor = True
+        Me.chkAllowMultiInstance.AutoSize = True
+        Me.chkAllowMultiInstance.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 10.5!, System.Drawing.FontStyle.Bold)
+        Me.chkAllowMultiInstance.Location = New System.Drawing.Point(305, 244)
+        Me.chkAllowMultiInstance.Name = "chkAllowMultiInstance"
+        Me.chkAllowMultiInstance.Size = New System.Drawing.Size(220, 18)
+        Me.chkAllowMultiInstance.TabIndex = 2
+        Me.chkAllowMultiInstance.Text = "多重起動を許可（テスト用）"
+        Me.chkAllowMultiInstance.UseVisualStyleBackColor = True
         Me.lblDefaultSyain.AutoSize = True
         Me.lblDefaultSyain.Location = New System.Drawing.Point(24, 276)
         Me.lblDefaultSyain.Name = "lblDefaultSyain"

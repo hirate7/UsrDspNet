@@ -64,13 +64,31 @@ Module MdlUsrLock
     End Function
 
     ''' <summary>
-    ''' 現在設定されている担当者名を取得
+    ''' 現在のプロセスに応じたロック用PC名を取得（2台目多重起動時は _2 を付与）
     ''' </summary>
-    Private Function GetCurrentStaffName() As String
-        If Not String.IsNullOrWhiteSpace(OptionDefaultSyainName) Then
-            Return OptionDefaultSyainName
+    Public Function GetMyLockPcName() As String
+        Dim basePc As String = Environment.MachineName
+        If IsSecondaryInstance Then
+            Return basePc & "_2"
         End If
-        Return Environment.UserName
+        Return basePc
+    End Function
+
+    ''' <summary>
+    ''' 現在のプロセスに応じた担当者名を取得（2台目多重起動時は (副) を付与）
+    ''' </summary>
+    Public Function GetMyLockUserName() As String
+        Dim staff As String = ""
+        If Not String.IsNullOrWhiteSpace(OptionDefaultSyainName) Then
+            staff = OptionDefaultSyainName
+        Else
+            staff = Environment.UserName
+        End If
+
+        If IsSecondaryInstance Then
+            Return staff & "(副)"
+        End If
+        Return staff
     End Function
 
     ''' <summary>
@@ -80,8 +98,8 @@ Module MdlUsrLock
         Dim cleanCode As String = GetNumAlp(userCode)
         If String.IsNullOrWhiteSpace(cleanCode) Then Return LockResult.Success
 
-        Dim myPc As String = Environment.MachineName
-        Dim myUser As String = GetCurrentStaffName()
+        Dim myPc As String = GetMyLockPcName()
+        Dim myUser As String = GetMyLockUserName()
         Dim nowTime As DateTime = DateTime.Now
         Dim timeoutThreshold As DateTime = nowTime.AddMinutes(-LockTimeoutMinutes)
 
@@ -109,7 +127,6 @@ Module MdlUsrLock
                 End Using
 
                 ' 2. 空、自PC、または1時間経過している場合、アトミックに条件付き更新でロックを取得
-                ' Jet 4.0 では DateTime 型パラメータを明示的に OleDbType.Date で指定する必要がある
                 Dim sqlAcquire As String = "UPDATE ユーザーデータ SET LockPC = ?, LockUser = ?, LockTime = ? " &
                                           "WHERE [コード] = ? AND (LockPC IS NULL OR LockPC = '' OR LockPC = ? OR LockTime IS NULL OR LockTime <= ?)"
                 Using cmdAcquire As New OleDbCommand(sqlAcquire, cn)
@@ -154,8 +171,8 @@ Module MdlUsrLock
         Dim cleanCode As String = GetNumAlp(userCode)
         If String.IsNullOrWhiteSpace(cleanCode) Then Return True
 
-        Dim myPc As String = Environment.MachineName
-        Dim myUser As String = GetCurrentStaffName()
+        Dim myPc As String = GetMyLockPcName()
+        Dim myUser As String = GetMyLockUserName()
         Dim nowTime As DateTime = DateTime.Now
 
         Try
@@ -216,7 +233,7 @@ Module MdlUsrLock
         Dim cleanCode As String = GetNumAlp(userCode)
         If String.IsNullOrWhiteSpace(cleanCode) Then Return
 
-        Dim myPc As String = Environment.MachineName
+        Dim myPc As String = GetMyLockPcName()
 
         Try
             Using cn As OleDbConnection = GetLockConnection()
@@ -240,7 +257,7 @@ Module MdlUsrLock
         Dim cleanCode As String = GetNumAlp(userCode)
         If String.IsNullOrWhiteSpace(cleanCode) Then Return True
 
-        Dim myPc As String = Environment.MachineName
+        Dim myPc As String = GetMyLockPcName()
         Dim nowTime As DateTime = DateTime.Now
         Dim timeoutThreshold As DateTime = nowTime.AddMinutes(-LockTimeoutMinutes)
 

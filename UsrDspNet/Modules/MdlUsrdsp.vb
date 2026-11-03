@@ -73,6 +73,8 @@ Public Module MdlUsrdsp
     Public OptionPrtMap As Boolean = True
     Public OptionPrtMei As Integer = 4
     Public OptionAutoCopyDb As Boolean = False
+    Public OptionAllowMultiInstance As Boolean = False
+    Public IsSecondaryInstance As Boolean = False
     Public OptionDefaultSyainCode As String = ""
     Public OptionDefaultSyainName As String = ""
 

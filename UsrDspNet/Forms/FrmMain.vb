@@ -69,7 +69,10 @@ Public Class FrmMain
 
         UpdateModeUI()
         UpdateDspModeStatus()
-        stlPcName.Text = "PC: " & GetPcName()
+        stlPcName.Text = "PC: " & GetMyLockPcName()
+        If IsSecondaryInstance Then
+            Me.Text &= " 【多重起動（テスト用2台目）】"
+        End If
 
         rdoMntSortSagyou.Checked = (OptionMntUsrSort = 1)
         rdoMntSortKijitsu.Checked = (OptionMntUsrSort = 2)
