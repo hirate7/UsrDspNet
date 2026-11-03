@@ -142,6 +142,8 @@ Public Class FrmMntEdit
                         TxtSagyouTime.Text = ""
                     End If
                     txtNaiyou.Text = NulCut(r("内容"))
+                    txtNaiyou.SelectionStart = 0
+                    txtNaiyou.SelectionLength = 0
                     TxtKijitsu.Text = MakeDateString(r("期日"), StlYMD)
                     ChkKanryou.Checked = NulCutBool(r("完了"))
                     Dim vCnt As Integer = CInt(NulCutN(r("訪問")))
@@ -175,6 +177,13 @@ Public Class FrmMntEdit
         hznLblSyainCD = LblSyainCD.Text
         hznChkKanryou = ChkKanryou.Checked
         hznInmVisit = CInt(inmVisit.Value)
+    End Sub
+
+    ' ウィンドウ表示時に内容テキストが全選択状態にならないようにする
+    Private Sub FrmMntEdit_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
+        txtNaiyou.SelectionStart = 0
+        txtNaiyou.SelectionLength = 0
+        txtNaiyou.ScrollToCaret()
     End Sub
 
     Private Function IsDirty() As Boolean

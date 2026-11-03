@@ -1,4 +1,4 @@
-Imports System.Data
+﻿Imports System.Data
 Imports System.Data.OleDb
 Imports System.IO
 Imports System.Text
@@ -160,7 +160,7 @@ Public Module MdlUsrdsp
         DspSleep = "3"
     End Sub
 
-    Public Function CheckNetworkFileExists(ByVal filePath As String, Optional ByVal timeoutMs As Integer = 1800) As Boolean
+    Public Function CheckNetworkFileExists(ByVal filePath As String, Optional ByVal timeoutMs As Integer = 3000) As Boolean
         Try
             Dim t As Task(Of Boolean) = Task.Run(Function() File.Exists(filePath))
             If t.Wait(timeoutMs) Then
@@ -171,20 +171,51 @@ Public Module MdlUsrdsp
         Return False
     End Function
 
+    Public Function CheckNetworkFileExistsWithRetry(ByVal filePath As String, Optional ByVal timeoutMsPerAttempt As Integer = 2500, Optional ByVal maxAttempts As Integer = 3, Optional ByVal waitIntervalMs As Integer = 1000) As Boolean
+        For attempt As Integer = 1 To maxAttempts
+            If CheckNetworkFileExists(filePath, timeoutMsPerAttempt) Then
+                Return True
+            End If
+            If attempt < maxAttempts Then
+                System.Threading.Thread.Sleep(waitIntervalMs)
+            End If
+        Next
+        Return False
+    End Function
+
     Public Function ConnectDatabases(Optional ByVal showNetworkWarning As Boolean = True) As Boolean
         MplDBActive = True
         MntDbActive = True
         PrtDbActive = True
 
         ' 1. ネットワーク疎通確認 ＆ 起動時自動データコピー
-        Dim netAvailable As Boolean = CheckNetworkFileExists(OptionNtMplMdb, 1800)
-        If Not netAvailable Then
-            If showNetworkWarning Then
-                MessageBox.Show("ネットワークデータに接続できません。 ローカルモードに切換えます", "確認", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+        Dim netAvailable As Boolean = False
+        Do
+            ' PC起動直後のネットワーク確立待ちに対応するため、自動リトライ（最大3回、各2.5秒）
+            netAvailable = CheckNetworkFileExistsWithRetry(OptionNtMplMdb, 2500, 3, 1000)
+            If Not netAvailable Then
+                If showNetworkWarning Then
+                    Dim dr As DialogResult = MessageBox.Show(
+                        "ネットワークデータに接続できませんでした。" & Environment.NewLine &
+                        "PCの起動直後などでネットワークが準備中の可能性があります。" & Environment.NewLine & Environment.NewLine &
+                        "【再試行】を押すと再度接続を試みます。" & Environment.NewLine &
+                        "【キャンセル】を押すとローカルモードで起動します。", 
+                        "ネットワーク接続確認",
+                        MessageBoxButtons.RetryCancel,
+                        MessageBoxIcon.Warning)
+                    If dr = DialogResult.Retry Then
+                        Continue Do
+                    End If
+                End If
+                ModeDbLocation = CnModeLocal
+                Exit Do
+            Else
+                ModeDbLocation = CnModeNet
+                Exit Do
             End If
-            ModeDbLocation = CnModeLocal
-        Else
-            ModeDbLocation = CnModeNet
+        Loop
+
+        If ModeDbLocation = CnModeNet Then
             If showNetworkWarning AndAlso OptionAutoCopyDb Then
                 Try
                     If CnMplMdb IsNot Nothing AndAlso CnMplMdb.State = ConnectionState.Open Then CnMplMdb.Close()
@@ -195,7 +226,7 @@ Public Module MdlUsrdsp
                     File.Copy(mdbDummy, OptionLcMplMdb, True)
                     File.Delete(mdbDummy)
 
-                    If CheckNetworkFileExists(OptionNtMntMdb, 1500) Then
+                    If CheckNetworkFileExists(OptionNtMntMdb, 3000) Then
                         File.Copy(OptionNtMntMdb, mdbDummy, True)
                         File.Copy(mdbDummy, OptionLcMntMdb, True)
                         File.Delete(mdbDummy)
@@ -206,7 +237,6 @@ Public Module MdlUsrdsp
                 End Try
             End If
         End If
-
         ' 2. メープルユーザーDB (ローカル)
         Try
             If CnMplMdb IsNot Nothing AndAlso CnMplMdb.State = ConnectionState.Open Then CnMplMdb.Close()
@@ -270,7 +300,7 @@ Public Module MdlUsrdsp
 
     Public Function SwitchDbMode(ByVal targetMode As Integer) As Boolean
         If targetMode = CnModeNet Then
-            If Not CheckNetworkFileExists(OptionNtMntMdb, 2000) Then
+            If Not CheckNetworkFileExists(OptionNtMntMdb, 3500) Then
                 MessageBox.Show("ネットワークデータベースが確認出来ません", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
                 Return False
             End If
@@ -291,7 +321,7 @@ Public Module MdlUsrdsp
     End Function
 
     Public Function CopyNetworkDbToLocal() As Boolean
-        If Not CheckNetworkFileExists(OptionNtMplMdb, 2000) Then
+        If Not CheckNetworkFileExists(OptionNtMplMdb, 3500) Then
             MessageBox.Show("ネットワークデータベースが確認出来ません", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             Return False
         End If

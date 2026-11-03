@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class FrmMain
     Inherits System.Windows.Forms.Form
 
@@ -2404,7 +2404,7 @@ Partial Class FrmMain
         '
         'tmrRrk
         '
-        Me.tmrRrk.Interval = 1200
+        Me.tmrRrk.Interval = 6000
         '
         'FrmMain
         '

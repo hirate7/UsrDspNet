@@ -76,8 +76,8 @@ Public Class FrmMain
         chkMntKanryou.Checked = OptionMntUsrDspKanryou
         chkMntAutoScroll.Checked = OptionMntUsrAutoScroll
 
-        LoadRrkHistory()
-        DspFirst()
+        Dim initialCode As String = LoadRrkHistory()
+        DspFirst(initialCode)
         FgPrtDsp()
         SetupListExportButton()
     End Sub
@@ -181,12 +181,12 @@ Public Class FrmMain
     ' =========================================================================
     ' ユーザー一覧初期表示・検索処理 (DspFirst / FindUsr)
     ' =========================================================================
-    Public Sub DspFirst()
+    Public Sub DspFirst(Optional ByVal targetCd As String = "")
         Dim sqlTxt As String = "SELECT 支部名, コード, 施術所名, 柔整師名, 電話番号, 削除, 〒, 住所1, 住所2, 分院Version, 本体機種名, 画面機種名, プリンター機種名, BCR機種名 " &
                                "FROM ユーザーデータ WHERE " & GetDspFilterSql() & " ORDER BY コード"
         stlSearchCond.Text = "検索条件: すべて"
         Me.Text = "検索 - 検索条件: すべて"
-        LoadUserGrid(sqlTxt)
+        LoadUserGrid(sqlTxt, targetCd)
     End Sub
 
     Public Sub FindUsr(ByVal Mode As Integer, ByVal defaultOp As Integer)
@@ -287,7 +287,7 @@ Public Class FrmMain
         LoadUserGrid(sqlTxt)
     End Sub
 
-    Private Sub LoadUserGrid(ByVal sqlTxt As String)
+    Private Sub LoadUserGrid(ByVal sqlTxt As String, Optional ByVal targetCd As String = "")
         Try
             isUpdatingGrid = True
             Dim dt As DataTable = QueryDataTable(sqlTxt, CnMplMdb)
@@ -306,12 +306,30 @@ Public Class FrmMain
             isUpdatingGrid = False
 
             If dt.Rows.Count > 0 Then
-                If dgvUsr.Rows.Count > 0 Then
-                    dgvUsr.ClearSelection()
-                    dgvUsr.Rows(0).Selected = True
+                Dim selectedRow As DataGridViewRow = Nothing
+                If targetCd <> "" Then
+                    Dim cleanTarget As String = GetNumAlp(targetCd)
+                    For Each row As DataGridViewRow In dgvUsr.Rows
+                        If GetNumAlp(NulCut(row.Cells("コード").Value)) = cleanTarget Then
+                            selectedRow = row
+                            Exit For
+                        End If
+                    Next
                 End If
-                Dim cd As String = TrimX(NulCut(dt.Rows(0)("コード")))
-                DisplayUserDetails(cd)
+
+                If selectedRow Is Nothing AndAlso dgvUsr.Rows.Count > 0 Then
+                    selectedRow = dgvUsr.Rows(0)
+                End If
+
+                If selectedRow IsNot Nothing Then
+                    dgvUsr.ClearSelection()
+                    selectedRow.Selected = True
+                    dgvUsr.FirstDisplayedScrollingRowIndex = selectedRow.Index
+                    Dim cd As String = TrimX(NulCut(selectedRow.Cells("コード").Value))
+                    DisplayUserDetails(cd)
+                Else
+                    DisplayUserDetails("")
+                End If
             Else
                 DisplayUserDetails("")
             End If
@@ -1146,10 +1164,11 @@ Public Class FrmMain
     ' =========================================================================
     ' 閲覧履歴 (rrk.txt) 読込・追記・保存
     ' =========================================================================
-    Private Sub LoadRrkHistory()
+    Private Function LoadRrkHistory() As String
+        Dim lastCode As String = ""
         cmbRrk.Items.Clear()
         Dim rrkPath As String = Path.Combine(DbPath, "rrk.txt")
-        If Not File.Exists(rrkPath) Then Return
+        If Not File.Exists(rrkPath) Then Return ""
 
         Try
             Dim enc As Encoding = Encoding.GetEncoding(932)
@@ -1163,14 +1182,19 @@ Public Class FrmMain
                 isRrkSelecting = True
                 cmbRrk.SelectedIndex = cmbRrk.Items.Count - 1
                 isRrkSelecting = False
+                Dim parts() As String = cmbRrk.SelectedItem.ToString().Split(New String() {" : "}, StringSplitOptions.None)
+                If parts.Length >= 2 Then
+                    lastCode = TrimX(parts(1))
+                End If
             End If
         Catch
         End Try
-    End Sub
+        Return lastCode
+    End Function
 
     Private Sub tmrRrk_Tick(sender As Object, e As EventArgs) Handles tmrRrk.Tick
         tmrRrk.Stop()
-        If currentCode <> "" AndAlso Not cmbRrk.Focused Then
+        If currentCode <> "" Then
             Dim entry As String = $"{DateTime.Now:yyyy/MM/dd HH:mm:ss} : {currentCode} : {txtSjName.Text} : {txtJsName.Text}"
             isRrkSelecting = True
             cmbRrk.Items.Add(entry)
@@ -1186,7 +1210,7 @@ Public Class FrmMain
         Dim parts() As String = text.Split(New String() {" : "}, StringSplitOptions.None)
         If parts.Length >= 2 Then
             Dim cd As String = TrimX(parts(1))
-            If cd <> "" AndAlso cd <> currentCode Then
+            If cd <> "" Then
                 SelectUserByCode(cd)
             End If
         End If
