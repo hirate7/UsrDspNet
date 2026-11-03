@@ -1,5 +1,7 @@
+Imports System.Collections.Generic
 Imports System.Data
 Imports System.Data.OleDb
+Imports System.Drawing
 Imports System.Windows.Forms
 
 Public Class FrmTel2Add
@@ -10,6 +12,7 @@ Public Class FrmTel2Add
     Public Sub LoadTelEx(ByVal code As String, ByVal userTitle As String)
         TargetCode = GetNumAlp(code)
         lblUser.Text = userTitle
+        lblTantoInfo.Text = If(String.IsNullOrWhiteSpace(OptionDefaultSyainName), "担当: 未設定", $"担当: {OptionDefaultSyainName}")
         TelBoxes = New TextBox() {txtTelEx0, txtTelEx1, txtTelEx2, txtTelEx3, txtTelEx4}
 
         For i As Integer = 0 To 4
@@ -66,10 +69,10 @@ Public Class FrmTel2Add
                 "WHERE [コード] = ?"
             Using cmd As New OleDbCommand(sqlUpd, cn)
                 For i As Integer = 0 To 4
-                    cmd.Parameters.Add("t" & i.ToString(), OleDbType.VarWChar).Value = vals(i)
+                    cmd.Parameters.Add("t" & i.ToString(), OleDbType.VarWChar).Value = ToDbStr(vals(i))
                 Next
                 For i As Integer = 0 To 4
-                    cmd.Parameters.Add("s" & i.ToString(), OleDbType.VarWChar).Value = stripped(i)
+                    cmd.Parameters.Add("s" & i.ToString(), OleDbType.VarWChar).Value = ToDbStr(stripped(i))
                 Next
                 cmd.Parameters.Add("cd", OleDbType.VarWChar).Value = TargetCode
                 cmd.ExecuteNonQuery()
@@ -82,10 +85,10 @@ Public Class FrmTel2Add
             Using cmd As New OleDbCommand(sqlIns, cn)
                 cmd.Parameters.Add("cd", OleDbType.VarWChar).Value = TargetCode
                 For i As Integer = 0 To 4
-                    cmd.Parameters.Add("t" & i.ToString(), OleDbType.VarWChar).Value = vals(i)
+                    cmd.Parameters.Add("t" & i.ToString(), OleDbType.VarWChar).Value = ToDbStr(vals(i))
                 Next
                 For i As Integer = 0 To 4
-                    cmd.Parameters.Add("s" & i.ToString(), OleDbType.VarWChar).Value = stripped(i)
+                    cmd.Parameters.Add("s" & i.ToString(), OleDbType.VarWChar).Value = ToDbStr(stripped(i))
                 Next
                 cmd.ExecuteNonQuery()
             End Using
@@ -99,23 +102,30 @@ Public Class FrmTel2Add
         End If
 
         Dim changed As Boolean = False
+        Dim changes As New List(Of UsrRrkChange)()
         For i As Integer = 0 To 4
-            If OldTelEx(i) <> TrimX(TelBoxes(i).Text) Then
+            Dim newV As String = TrimX(TelBoxes(i).Text)
+            If OldTelEx(i) <> newV Then
                 changed = True
-                Exit For
+                AddChangeIfDifferent(changes, "追加電話" & (i + 1).ToString(), OldTelEx(i), newV)
             End If
         Next
 
         If changed Then
             Try
                 ' 1. ネットワーク側 Mpl.mdb を更新
-                Using cnNt As New OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source='" & OptionNtMplMdb & "';")
-                    cnNt.Open()
-                    UpsertTelExOnConnection(cnNt)
-                End Using
+                If ModeDbLocation = CnModeNet AndAlso CheckNetworkFileExists(OptionNtMplMdb, 1500) Then
+                    Using cnNt As New OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source='" & OptionNtMplMdb & "';")
+                        cnNt.Open()
+                        UpsertTelExOnConnection(cnNt)
+                    End Using
+                End If
 
                 ' 2. ローカル側 Mpl.mdb も即座に同期更新
                 UpsertTelExOnConnection(CnMplMdb)
+
+                ' 3. ユーザーデータの履歴列に差分を保存
+                SaveUserHistoryChanges(TargetCode, changes)
 
                 Me.DialogResult = DialogResult.OK
             Catch ex As Exception
@@ -130,4 +140,28 @@ Public Class FrmTel2Add
     Private Sub cmdCancel_Click(sender As Object, e As EventArgs) Handles cmdCancel.Click
         Me.Close()
     End Sub
+
+    Private Sub btnHistory_Click(sender As Object, e As EventArgs) Handles btnHistory.Click
+        Using dlg As New FrmUsrRrkViewer()
+            dlg.ShowHistory(TargetCode, lblUser.Text, Me)
+        End Using
+    End Sub
+
+    Protected Overrides Function ProcessCmdKey(ByRef msg As Message, keyData As Keys) As Boolean
+        If keyData = (Keys.Alt Or Keys.U) Then
+            cmdOk.PerformClick()
+            Return True
+        ElseIf keyData = (Keys.Alt Or Keys.C) Then
+            cmdCancel.PerformClick()
+            Return True
+        ElseIf keyData = (Keys.Alt Or Keys.H) Then
+            btnHistory.PerformClick()
+            Return True
+        ElseIf keyData = Keys.Escape Then
+            ' Escキーでの誤終了を防止
+            Return True
+        End If
+        Return MyBase.ProcessCmdKey(msg, keyData)
+    End Function
+
 End Class

@@ -53,6 +53,8 @@ Partial Class FrmEtc
 
     Friend WithEvents cmdOk As Button
     Friend WithEvents cmdCancel As Button
+    Friend WithEvents btnHistory As Button
+    Friend WithEvents lblTantoInfo As Label
 
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
@@ -92,6 +94,8 @@ Partial Class FrmEtc
 
         Me.cmdOk = New Button()
         Me.cmdCancel = New Button()
+        Me.btnHistory = New Button()
+        Me.lblTantoInfo = New Label()
 
         Me.grpIme.SuspendLayout()
         Me.grpInput.SuspendLayout()
@@ -226,6 +230,14 @@ Partial Class FrmEtc
         Me.cmdCancel.Text = "キャンセル(&C)"
         Me.cmdCancel.Location = New Point(348, 520)
         Me.cmdCancel.Size = New Size(110, 34)
+        Me.btnHistory.Text = "修正履歴(&H)..."
+        Me.btnHistory.Location = New Point(12, 520)
+        Me.btnHistory.Size = New Size(110, 34)
+
+        Me.lblTantoInfo.AutoSize = True
+        Me.lblTantoInfo.ForeColor = SystemColors.GrayText
+        Me.lblTantoInfo.Location = New Point(128, 530)
+        Me.lblTantoInfo.Text = "担当: 未設定"
 
         Me.Controls.AddRange(New Control() {
             Me.lblUser, Me.grpIme, Me.grpInput, Me.grpNet, Me.grpClick, Me.grpGmapLink, Me.grpVupType, Me.cmdOk, Me.cmdCancel

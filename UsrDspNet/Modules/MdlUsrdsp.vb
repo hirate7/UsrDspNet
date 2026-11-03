@@ -1,4 +1,4 @@
-﻿Imports System.Data
+Imports System.Data
 Imports System.Data.OleDb
 Imports System.IO
 Imports System.Text
@@ -73,6 +73,8 @@ Public Module MdlUsrdsp
     Public OptionPrtMap As Boolean = True
     Public OptionPrtMei As Integer = 4
     Public OptionAutoCopyDb As Boolean = False
+    Public OptionDefaultSyainCode As String = ""
+    Public OptionDefaultSyainName As String = ""
 
     ' 表示対象フラグ ("1"=通常, "2"=削除, "3"=一時休止, "9"=非表示)
     Public DspNormal As String = "1"
@@ -154,6 +156,8 @@ Public Module MdlUsrdsp
         OptionBrouserPath = GetSetting(AppTitleReg, "Options", "BrouserPath", "")
         OptionUseGmapLink = True
         OptionAutoCopyDb = (Val(GetSetting(AppTitleReg, "Settings", "chkAutoCopyMntMdb", "0")) = 1)
+        OptionDefaultSyainCode = GetSetting(AppTitleReg, "Options", "DefaultSyainCode", "")
+        OptionDefaultSyainName = GetSetting(AppTitleReg, "Options", "DefaultSyainName", "")
 
         DspNormal = "1"
         DspDelete = "9"
@@ -243,6 +247,7 @@ Public Module MdlUsrdsp
             CnMplMdb = New OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source='" & OptionLcMplMdb & "';")
             CnMplMdb.Open()
             EnsureVupTypeColumn(CnMplMdb)
+            EnsureRrkColumn(CnMplMdb)
         Catch ex As Exception
             MplDBActive = False
             MessageBox.Show(OptionLcMplMdb & " に接続できません。" & Environment.NewLine & ex.Message, "DB Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -254,6 +259,7 @@ Public Module MdlUsrdsp
                 Using cnNtMpl As New OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source='" & OptionNtMplMdb & "';")
                     cnNtMpl.Open()
                     EnsureVupTypeColumn(cnNtMpl)
+                    EnsureRrkColumn(cnNtMpl)
                 End Using
             Catch
             End Try

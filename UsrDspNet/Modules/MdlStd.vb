@@ -17,6 +17,14 @@ Public Module MdlStd
         Return S.ToString()
     End Function
 
+    Public Function ToDbStr(ByVal S As String) As Object
+        If String.IsNullOrWhiteSpace(S) Then
+            Return DBNull.Value
+        Else
+            Return S
+        End If
+    End Function
+
     Public Function NulCutN(ByVal S As Object) As Long
         If S Is Nothing OrElse IsDBNull(S) Then
             Return 0

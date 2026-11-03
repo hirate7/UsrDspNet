@@ -29,6 +29,30 @@ Public Class FrmOpt
         TxtNtMntMdb.Text = OptionNtMntMdb
         TxtLcPrtMdb.Text = OptionLcPrtMdb
         chkAutoCopyMntMdb.Checked = OptionAutoCopyDb
+        ' 社員マスター読込
+        cmbDefaultSyain.Items.Clear()
+        cmbDefaultSyain.Items.Add(New SyainComboItem("", "（未設定）"))
+        Dim selectedSyainIdx As Integer = 0
+        Try
+            If CnMntMdb IsNot Nothing AndAlso CnMntMdb.State = ConnectionState.Open Then
+                Dim dtSyain As DataTable = QueryDataTable("SELECT DISTINCT 社員コード, 社員名 FROM 社員マスター ORDER BY 社員コード", CnMntMdb)
+                If dtSyain IsNot Nothing Then
+                    For Each r As DataRow In dtSyain.Rows
+                        Dim c As String = TrimX(NulCut(r("社員コード")))
+                        Dim n As String = TrimX(NulCut(r("社員名")))
+                        If n <> "" Then
+                            Dim item As New SyainComboItem(c, n)
+                            Dim idx As Integer = cmbDefaultSyain.Items.Add(item)
+                            If c = OptionDefaultSyainCode Then
+                                selectedSyainIdx = idx
+                            End If
+                        End If
+                    Next
+                End If
+            End If
+        Catch
+        End Try
+        cmbDefaultSyain.SelectedIndex = selectedSyainIdx
 
         ' Tab 2: メンテ(ユーザー別)
         If OptionMntUsrSort = 2 Then
@@ -160,6 +184,16 @@ Public Class FrmOpt
         ' Tab 1: 起動時自動コピー
         OptionAutoCopyDb = chkAutoCopyMntMdb.Checked
         SaveSetting(AppTitleReg, "Settings", "chkAutoCopyMntMdb", If(OptionAutoCopyDb, "1", "0"))
+        Dim selSyain As SyainComboItem = TryCast(cmbDefaultSyain.SelectedItem, SyainComboItem)
+        If selSyain IsNot Nothing AndAlso selSyain.Code <> "" Then
+            OptionDefaultSyainCode = selSyain.Code
+            OptionDefaultSyainName = selSyain.Name
+        Else
+            OptionDefaultSyainCode = ""
+            OptionDefaultSyainName = ""
+        End If
+        SaveSetting(AppTitleReg, "Options", "DefaultSyainCode", OptionDefaultSyainCode)
+        SaveSetting(AppTitleReg, "Options", "DefaultSyainName", OptionDefaultSyainName)
 
         ' Tab 2: メンテ(ユーザー別)
         OptionMntUsrSort = If(OptUsrKijitsu.Checked, 2, 1)

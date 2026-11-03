@@ -30,6 +30,8 @@ Partial Class FrmTel2Add
     Friend WithEvents txtTelEx4 As TextBox
     Friend WithEvents cmdOk As Button
     Friend WithEvents cmdCancel As Button
+    Friend WithEvents btnHistory As Button
+    Friend WithEvents lblTantoInfo As Label
 
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
@@ -47,6 +49,8 @@ Partial Class FrmTel2Add
         Me.txtTelEx4 = New TextBox()
         Me.cmdOk = New Button()
         Me.cmdCancel = New Button()
+        Me.btnHistory = New Button()
+        Me.lblTantoInfo = New Label()
         Me.SuspendLayout()
 
         Me.AutoScaleDimensions = New SizeF(6.0!, 12.0!)
@@ -92,8 +96,16 @@ Partial Class FrmTel2Add
         Me.cmdCancel.Text = "キャンセル(&C)"
         Me.cmdCancel.Location = New Point(315, 240)
         Me.cmdCancel.Size = New Size(105, 34)
+        Me.btnHistory.Text = "修正履歴(&H)..."
+        Me.btnHistory.Location = New Point(12, 240)
+        Me.btnHistory.Size = New Size(110, 34)
 
-        Me.Controls.AddRange(New Control() {Me.lblUser, Me.lblNote, Me.cmdOk, Me.cmdCancel})
+        Me.lblTantoInfo.AutoSize = True
+        Me.lblTantoInfo.ForeColor = SystemColors.GrayText
+        Me.lblTantoInfo.Location = New Point(126, 250)
+        Me.lblTantoInfo.Text = "担当: 未設定"
+
+        Me.Controls.AddRange(New Control() {Me.lblUser, Me.lblNote, Me.cmdOk, Me.cmdCancel, Me.btnHistory, Me.lblTantoInfo})
         Me.ResumeLayout(False)
         Me.PerformLayout()
     End Sub

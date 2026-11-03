@@ -1,4 +1,4 @@
-﻿Imports System.Data
+Imports System.Data
 Imports System.Data.OleDb
 Imports System.Drawing
 Imports System.IO
@@ -176,6 +176,14 @@ Public Class FrmMain
 
     Private Sub btnShowAll_Click(sender As Object, e As EventArgs) Handles btnShowAll.Click, mnuFindAll.Click
         DspFirst()
+    End Sub
+
+    Private Sub mnuUserHistory_Click(sender As Object, e As EventArgs) Handles mnuUserHistory.Click
+        Using dlg As New FrmUsrRrkViewer()
+            Dim cd As String = If(String.IsNullOrWhiteSpace(currentCode), "", currentCode)
+            Dim title As String = If(String.IsNullOrWhiteSpace(currentCode), "（ユーザー未選択）", $"{currentCode}  {txtSjName.Text}")
+            dlg.ShowHistory(cd, title, Me)
+        End Using
     End Sub
 
     ' =========================================================================
@@ -1141,6 +1149,50 @@ Public Class FrmMain
             Clipboard.SetText(sb.ToString())
         Catch
         End Try
+    End Sub
+
+    Private Sub btnEditUsr_Click(sender As Object, e As EventArgs) Handles btnEditUsr.Click,
+        txtVer.DoubleClick, txtSibu.DoubleClick,
+        txtSjName.DoubleClick, txtSjNameF.DoubleClick,
+        txtJsName.DoubleClick, txtJsNameF.DoubleClick,
+        txtTel.DoubleClick,
+        txtAdd.DoubleClick, txtSinryou.DoubleClick, txtMemo.DoubleClick
+        If String.IsNullOrWhiteSpace(currentCode) Then Return
+
+        Using dlg As New FrmUsrEdit()
+            dlg.LoadUserInfo(currentCode, $"{currentCode}  {txtSjName.Text}")
+            If dlg.ShowDialog(Me) = DialogResult.OK Then
+                DisplayUserDetails(currentCode)
+                ' 一覧グリッドの該当行の表示も更新
+                Dim cleanTarget As String = GetNumAlp(currentCode)
+                For Each row As DataGridViewRow In dgvUsr.Rows
+                    If GetNumAlp(NulCut(row.Cells("コード").Value)) = cleanTarget Then
+                        If dgvUsr.Columns.Contains("支部名") Then row.Cells("支部名").Value = txtSibu.Text
+                        If dgvUsr.Columns.Contains("施術所名") Then row.Cells("施術所名").Value = txtSjName.Text
+                        If dgvUsr.Columns.Contains("柔整師名") Then row.Cells("柔整師名").Value = txtJsName.Text
+                        If dgvUsr.Columns.Contains("電話番号") Then row.Cells("電話番号").Value = txtTel.Text
+                        Exit For
+                    End If
+                Next
+            End If
+        End Using
+    End Sub
+
+    Private Sub btnEditKisyu_Click(sender As Object, e As EventArgs) Handles btnEditKisyu.Click,
+        txtPc0.DoubleClick, txtPc1.DoubleClick,
+        txtPrt0.DoubleClick, txtPrt1.DoubleClick,
+        txtMn0.DoubleClick, txtMn1.DoubleClick,
+        txtBcr0.DoubleClick, txtBcr1.DoubleClick,
+        txtHdd0.DoubleClick, txtHdd1.DoubleClick,
+        txtMiniPrt0.DoubleClick, txtMiniPrt1.DoubleClick
+        If String.IsNullOrWhiteSpace(currentCode) Then Return
+
+        Using dlg As New FrmKisyuEdit()
+            dlg.LoadKisyuInfo(currentCode, $"{currentCode}  {txtSjName.Text}")
+            If dlg.ShowDialog(Me) = DialogResult.OK Then
+                DisplayUserDetails(currentCode)
+            End If
+        End Using
     End Sub
 
     Private Sub btnGoogleMap_Click(sender As Object, e As EventArgs) Handles btnGoogleMap.Click

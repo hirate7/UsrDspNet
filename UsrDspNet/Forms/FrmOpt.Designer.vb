@@ -33,6 +33,8 @@ Partial Class FrmOpt
     Public WithEvents lblLcPrt As System.Windows.Forms.Label
     Public WithEvents TxtLcPrtMdb As System.Windows.Forms.TextBox
     Public WithEvents chkAutoCopyMntMdb As System.Windows.Forms.CheckBox
+    Public WithEvents lblDefaultSyain As System.Windows.Forms.Label
+    Public WithEvents cmbDefaultSyain As System.Windows.Forms.ComboBox
 
     ' Tab 2: メンテ(ユーザー別)
     Public WithEvents grpUsrSort As System.Windows.Forms.GroupBox
@@ -119,6 +121,8 @@ Partial Class FrmOpt
         Me.lblLcPrt = New System.Windows.Forms.Label()
         Me.TxtLcPrtMdb = New System.Windows.Forms.TextBox()
         Me.chkAutoCopyMntMdb = New System.Windows.Forms.CheckBox()
+        Me.lblDefaultSyain = New System.Windows.Forms.Label()
+        Me.cmbDefaultSyain = New System.Windows.Forms.ComboBox()
 
         Me.grpUsrSort = New System.Windows.Forms.GroupBox()
         Me.OptUsrSagyou = New System.Windows.Forms.RadioButton()
@@ -221,6 +225,8 @@ Partial Class FrmOpt
         '
         Me.tabMain.Controls.Add(Me.grpDb)
         Me.tabMain.Controls.Add(Me.chkAutoCopyMntMdb)
+        Me.tabMain.Controls.Add(Me.lblDefaultSyain)
+        Me.tabMain.Controls.Add(Me.cmbDefaultSyain)
         Me.tabMain.Location = New System.Drawing.Point(4, 23)
         Me.tabMain.Name = "tabMain"
         Me.tabMain.Padding = New System.Windows.Forms.Padding(8)
@@ -274,12 +280,23 @@ Partial Class FrmOpt
 
         Me.chkAutoCopyMntMdb.AutoSize = True
         Me.chkAutoCopyMntMdb.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 10.5!, System.Drawing.FontStyle.Bold)
-        Me.chkAutoCopyMntMdb.Location = New System.Drawing.Point(24, 252)
+        Me.chkAutoCopyMntMdb.Location = New System.Drawing.Point(24, 244)
         Me.chkAutoCopyMntMdb.Name = "chkAutoCopyMntMdb"
         Me.chkAutoCopyMntMdb.Size = New System.Drawing.Size(260, 18)
         Me.chkAutoCopyMntMdb.TabIndex = 1
         Me.chkAutoCopyMntMdb.Text = "起動時にローカルデータを更新する"
         Me.chkAutoCopyMntMdb.UseVisualStyleBackColor = True
+        Me.lblDefaultSyain.AutoSize = True
+        Me.lblDefaultSyain.Location = New System.Drawing.Point(24, 276)
+        Me.lblDefaultSyain.Name = "lblDefaultSyain"
+        Me.lblDefaultSyain.Size = New System.Drawing.Size(105, 12)
+        Me.lblDefaultSyain.TabIndex = 2
+        Me.lblDefaultSyain.Text = "既定の操作担当者:"
+        Me.cmbDefaultSyain.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cmbDefaultSyain.Location = New System.Drawing.Point(135, 272)
+        Me.cmbDefaultSyain.Name = "cmbDefaultSyain"
+        Me.cmbDefaultSyain.Size = New System.Drawing.Size(180, 20)
+        Me.cmbDefaultSyain.TabIndex = 3
 
         '
         'tabMntUsr (メンテ(ユーザー別))

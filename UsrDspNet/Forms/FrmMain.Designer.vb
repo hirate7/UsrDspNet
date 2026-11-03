@@ -1,4 +1,4 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class FrmMain
     Inherits System.Windows.Forms.Form
 
@@ -36,6 +36,8 @@ Partial Class FrmMain
     Public WithEvents mnuFindSn As System.Windows.Forms.ToolStripMenuItem
     Public WithEvents mnuSep3 As System.Windows.Forms.ToolStripSeparator
     Public WithEvents mnuFindAll As System.Windows.Forms.ToolStripMenuItem
+    Public WithEvents mnuSepHistory As System.Windows.Forms.ToolStripSeparator
+    Public WithEvents mnuUserHistory As System.Windows.Forms.ToolStripMenuItem
     Public WithEvents mnuMnt As System.Windows.Forms.ToolStripMenuItem
     Public WithEvents mnuMntList As System.Windows.Forms.ToolStripMenuItem
     Public WithEvents mnuMntFind As System.Windows.Forms.ToolStripMenuItem
@@ -139,6 +141,7 @@ Partial Class FrmMain
     ' Tab 1: 住所・診療時間
     Public WithEvents lblAddTitle As System.Windows.Forms.Label
     Public WithEvents txtAdd As System.Windows.Forms.TextBox
+    Public WithEvents btnEditUsr As System.Windows.Forms.Button
     Public WithEvents btnGoogleMap As System.Windows.Forms.Button
     Public WithEvents btnGmapLink1 As System.Windows.Forms.Button
     Public WithEvents btnGmapLink2 As System.Windows.Forms.Button
@@ -185,6 +188,7 @@ Partial Class FrmMain
     Public WithEvents txtLease1 As System.Windows.Forms.TextBox
     Public WithEvents txtLease2 As System.Windows.Forms.TextBox
     Public WithEvents btnCopyKisyu As System.Windows.Forms.Button
+    Public WithEvents btnEditKisyu As System.Windows.Forms.Button
 
     ' Tab 3: 自宅・送付先
     Public WithEvents lblMhTelTitle As System.Windows.Forms.Label
@@ -265,6 +269,8 @@ Partial Class FrmMain
         Me.mnuFindSn = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuSep3 = New System.Windows.Forms.ToolStripSeparator()
         Me.mnuFindAll = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnuSepHistory = New System.Windows.Forms.ToolStripSeparator()
+        Me.mnuUserHistory = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuMnt = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuMntList = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuMntFind = New System.Windows.Forms.ToolStripMenuItem()
@@ -307,6 +313,7 @@ Partial Class FrmMain
         Me.tabSinryou = New System.Windows.Forms.TabPage()
         Me.lblAddTitle = New System.Windows.Forms.Label()
         Me.txtAdd = New System.Windows.Forms.TextBox()
+        Me.btnEditUsr = New System.Windows.Forms.Button()
         Me.btnGoogleMap = New System.Windows.Forms.Button()
         Me.btnGmapLink1 = New System.Windows.Forms.Button()
         Me.btnGmapLink2 = New System.Windows.Forms.Button()
@@ -322,6 +329,7 @@ Partial Class FrmMain
         Me.lstMntLog = New System.Windows.Forms.ListBox()
         Me.tabKisyu = New System.Windows.Forms.TabPage()
         Me.btnCopyKisyu = New System.Windows.Forms.Button()
+        Me.btnEditKisyu = New System.Windows.Forms.Button()
         Me.lblPcTitle = New System.Windows.Forms.Label()
         Me.txtPc0 = New System.Windows.Forms.TextBox()
         Me.txtPc1 = New System.Windows.Forms.TextBox()
@@ -559,7 +567,7 @@ Partial Class FrmMain
         '
         'mnuSearch
         '
-        Me.mnuSearch.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuFindName, Me.mnuFindCode, Me.mnuFindSibu, Me.mnuFindTel, Me.mnuFindPc, Me.mnuFindSn, Me.mnuSep3, Me.mnuFindAll})
+        Me.mnuSearch.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuFindName, Me.mnuFindCode, Me.mnuFindSibu, Me.mnuFindTel, Me.mnuFindPc, Me.mnuFindSn, Me.mnuSep3, Me.mnuFindAll, Me.mnuSepHistory, Me.mnuUserHistory})
         Me.mnuSearch.Name = "mnuSearch"
         Me.mnuSearch.Size = New System.Drawing.Size(57, 20)
         Me.mnuSearch.Text = "検索(&S)"
@@ -616,6 +624,17 @@ Partial Class FrmMain
         Me.mnuFindAll.Name = "mnuFindAll"
         Me.mnuFindAll.Size = New System.Drawing.Size(214, 22)
         Me.mnuFindAll.Text = "すべて表示(&A)"
+        '
+        'mnuSepHistory
+        '
+        Me.mnuSepHistory.Name = "mnuSepHistory"
+        Me.mnuSepHistory.Size = New System.Drawing.Size(211, 6)
+        '
+        'mnuUserHistory
+        '
+        Me.mnuUserHistory.Name = "mnuUserHistory"
+        Me.mnuUserHistory.Size = New System.Drawing.Size(214, 22)
+        Me.mnuUserHistory.Text = "ユーザー修正履歴の表示・検索(&H)..."
         '
         'mnuMnt
         '
@@ -687,7 +706,7 @@ Partial Class FrmMain
         'mnuSepPrt1
         '
         Me.mnuSepPrt1.Name = "mnuSepPrt1"
-        Me.mnuSepPrt1.Size = New System.Drawing.Size(303, 6)
+        Me.mnuSepPrt1.Size = New System.Drawing.Size(280, 6)
         '
         'mnuPrtMntUsr
         '
@@ -698,7 +717,7 @@ Partial Class FrmMain
         'mnuSepPrt2
         '
         Me.mnuSepPrt2.Name = "mnuSepPrt2"
-        Me.mnuSepPrt2.Size = New System.Drawing.Size(303, 6)
+        Me.mnuSepPrt2.Size = New System.Drawing.Size(280, 6)
         '
         'mnuVupLabel
         '
@@ -722,13 +741,13 @@ Partial Class FrmMain
         'mnuOptAll
         '
         Me.mnuOptAll.Name = "mnuOptAll"
-        Me.mnuOptAll.Size = New System.Drawing.Size(180, 22)
+        Me.mnuOptAll.Size = New System.Drawing.Size(158, 22)
         Me.mnuOptAll.Text = "環境設定(&O)..."
         '
         'mnuOptBrowser
         '
         Me.mnuOptBrowser.Name = "mnuOptBrowser"
-        Me.mnuOptBrowser.Size = New System.Drawing.Size(180, 22)
+        Me.mnuOptBrowser.Size = New System.Drawing.Size(158, 22)
         Me.mnuOptBrowser.Text = "ブラウザ設定(&B)..."
         '
         'pnlTopBar
@@ -945,6 +964,7 @@ Partial Class FrmMain
         '
         Me.tabSinryou.Controls.Add(Me.lblAddTitle)
         Me.tabSinryou.Controls.Add(Me.txtAdd)
+        Me.tabSinryou.Controls.Add(Me.btnEditUsr)
         Me.tabSinryou.Controls.Add(Me.btnGoogleMap)
         Me.tabSinryou.Controls.Add(Me.btnGmapLink1)
         Me.tabSinryou.Controls.Add(Me.btnGmapLink2)
@@ -958,6 +978,7 @@ Partial Class FrmMain
         Me.tabSinryou.Controls.Add(Me.txtMemo2)
         Me.tabSinryou.Controls.Add(Me.lblRecentMntTitle)
         Me.tabSinryou.Controls.Add(Me.lstMntLog)
+        Me.tabSinryou.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.tabSinryou.Location = New System.Drawing.Point(4, 23)
         Me.tabSinryou.Name = "tabSinryou"
         Me.tabSinryou.Size = New System.Drawing.Size(592, 487)
@@ -967,9 +988,9 @@ Partial Class FrmMain
         '
         'lblAddTitle
         '
-        Me.lblAddTitle.Location = New System.Drawing.Point(10, 14)
+        Me.lblAddTitle.Location = New System.Drawing.Point(8, 14)
         Me.lblAddTitle.Name = "lblAddTitle"
-        Me.lblAddTitle.Size = New System.Drawing.Size(58, 18)
+        Me.lblAddTitle.Size = New System.Drawing.Size(68, 20)
         Me.lblAddTitle.TabIndex = 0
         Me.lblAddTitle.Text = "住所"
         '
@@ -978,13 +999,21 @@ Partial Class FrmMain
         Me.txtAdd.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtAdd.BackColor = System.Drawing.Color.White
-        Me.txtAdd.Location = New System.Drawing.Point(72, 10)
+        Me.txtAdd.Location = New System.Drawing.Point(80, 10)
         Me.txtAdd.Multiline = True
         Me.txtAdd.Name = "txtAdd"
         Me.txtAdd.ReadOnly = True
         Me.txtAdd.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.txtAdd.Size = New System.Drawing.Size(395, 58)
+        Me.txtAdd.Size = New System.Drawing.Size(387, 58)
         Me.txtAdd.TabIndex = 1
+        '
+        'btnEditUsr
+        '
+        Me.btnEditUsr.Location = New System.Drawing.Point(9, 37)
+        Me.btnEditUsr.Name = "btnEditUsr"
+        Me.btnEditUsr.Size = New System.Drawing.Size(68, 28)
+        Me.btnEditUsr.TabIndex = 2
+        Me.btnEditUsr.Text = "編集"
         '
         'btnGoogleMap
         '
@@ -1001,7 +1030,7 @@ Partial Class FrmMain
         Me.btnGmapLink1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnGmapLink1.Location = New System.Drawing.Point(475, 42)
         Me.btnGmapLink1.Name = "btnGmapLink1"
-        Me.btnGmapLink1.Size = New System.Drawing.Size(32, 25)
+        Me.btnGmapLink1.Size = New System.Drawing.Size(32, 26)
         Me.btnGmapLink1.TabIndex = 3
         Me.btnGmapLink1.Text = "1"
         Me.btnGmapLink1.UseVisualStyleBackColor = True
@@ -1012,7 +1041,7 @@ Partial Class FrmMain
         Me.btnGmapLink2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnGmapLink2.Location = New System.Drawing.Point(511, 42)
         Me.btnGmapLink2.Name = "btnGmapLink2"
-        Me.btnGmapLink2.Size = New System.Drawing.Size(32, 25)
+        Me.btnGmapLink2.Size = New System.Drawing.Size(32, 26)
         Me.btnGmapLink2.TabIndex = 4
         Me.btnGmapLink2.Text = "2"
         Me.btnGmapLink2.UseVisualStyleBackColor = True
@@ -1023,7 +1052,7 @@ Partial Class FrmMain
         Me.btnGmapLink3.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnGmapLink3.Location = New System.Drawing.Point(547, 42)
         Me.btnGmapLink3.Name = "btnGmapLink3"
-        Me.btnGmapLink3.Size = New System.Drawing.Size(32, 25)
+        Me.btnGmapLink3.Size = New System.Drawing.Size(32, 26)
         Me.btnGmapLink3.TabIndex = 5
         Me.btnGmapLink3.Text = "3"
         Me.btnGmapLink3.UseVisualStyleBackColor = True
@@ -1031,9 +1060,10 @@ Partial Class FrmMain
         '
         'lblSinryouTitle
         '
-        Me.lblSinryouTitle.Location = New System.Drawing.Point(10, 78)
+        Me.lblSinryouTitle.Font = New System.Drawing.Font("MS UI Gothic", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblSinryouTitle.Location = New System.Drawing.Point(6, 78)
         Me.lblSinryouTitle.Name = "lblSinryouTitle"
-        Me.lblSinryouTitle.Size = New System.Drawing.Size(58, 18)
+        Me.lblSinryouTitle.Size = New System.Drawing.Size(72, 20)
         Me.lblSinryouTitle.TabIndex = 6
         Me.lblSinryouTitle.Text = "診療時間"
         '
@@ -1042,19 +1072,19 @@ Partial Class FrmMain
         Me.txtSinryou.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtSinryou.BackColor = System.Drawing.Color.White
-        Me.txtSinryou.Location = New System.Drawing.Point(72, 74)
+        Me.txtSinryou.Location = New System.Drawing.Point(80, 74)
         Me.txtSinryou.Multiline = True
         Me.txtSinryou.Name = "txtSinryou"
         Me.txtSinryou.ReadOnly = True
         Me.txtSinryou.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.txtSinryou.Size = New System.Drawing.Size(509, 44)
+        Me.txtSinryou.Size = New System.Drawing.Size(501, 44)
         Me.txtSinryou.TabIndex = 7
         '
         'lblBikouTitle
         '
-        Me.lblBikouTitle.Location = New System.Drawing.Point(10, 128)
+        Me.lblBikouTitle.Location = New System.Drawing.Point(8, 126)
         Me.lblBikouTitle.Name = "lblBikouTitle"
-        Me.lblBikouTitle.Size = New System.Drawing.Size(58, 18)
+        Me.lblBikouTitle.Size = New System.Drawing.Size(68, 20)
         Me.lblBikouTitle.TabIndex = 8
         Me.lblBikouTitle.Text = "備考"
         '
@@ -1063,27 +1093,27 @@ Partial Class FrmMain
         Me.txtMemo.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtMemo.BackColor = System.Drawing.Color.White
-        Me.txtMemo.Location = New System.Drawing.Point(72, 124)
+        Me.txtMemo.Location = New System.Drawing.Point(80, 124)
         Me.txtMemo.Multiline = True
         Me.txtMemo.Name = "txtMemo"
         Me.txtMemo.ReadOnly = True
         Me.txtMemo.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.txtMemo.Size = New System.Drawing.Size(509, 100)
+        Me.txtMemo.Size = New System.Drawing.Size(501, 100)
         Me.txtMemo.TabIndex = 9
         '
         'lblShareMemoTitle
         '
-        Me.lblShareMemoTitle.Location = New System.Drawing.Point(10, 234)
+        Me.lblShareMemoTitle.Location = New System.Drawing.Point(8, 232)
         Me.lblShareMemoTitle.Name = "lblShareMemoTitle"
-        Me.lblShareMemoTitle.Size = New System.Drawing.Size(58, 18)
+        Me.lblShareMemoTitle.Size = New System.Drawing.Size(68, 20)
         Me.lblShareMemoTitle.TabIndex = 10
-        Me.lblShareMemoTitle.Text = "メモ"
+        Me.lblShareMemoTitle.Text = "共通メモ"
         '
         'btnEditMemoTab1
         '
         Me.btnEditMemoTab1.Location = New System.Drawing.Point(8, 256)
         Me.btnEditMemoTab1.Name = "btnEditMemoTab1"
-        Me.btnEditMemoTab1.Size = New System.Drawing.Size(58, 24)
+        Me.btnEditMemoTab1.Size = New System.Drawing.Size(68, 28)
         Me.btnEditMemoTab1.TabIndex = 11
         Me.btnEditMemoTab1.Text = "編集"
         Me.btnEditMemoTab1.UseVisualStyleBackColor = True
@@ -1093,19 +1123,20 @@ Partial Class FrmMain
         Me.txtMemo2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtMemo2.BackColor = System.Drawing.Color.White
-        Me.txtMemo2.Location = New System.Drawing.Point(72, 230)
+        Me.txtMemo2.Location = New System.Drawing.Point(80, 230)
         Me.txtMemo2.Multiline = True
         Me.txtMemo2.Name = "txtMemo2"
         Me.txtMemo2.ReadOnly = True
         Me.txtMemo2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.txtMemo2.Size = New System.Drawing.Size(509, 100)
+        Me.txtMemo2.Size = New System.Drawing.Size(501, 100)
         Me.txtMemo2.TabIndex = 12
         '
         'lblRecentMntTitle
         '
+        Me.lblRecentMntTitle.Font = New System.Drawing.Font("MS UI Gothic", 9.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblRecentMntTitle.Location = New System.Drawing.Point(6, 340)
         Me.lblRecentMntTitle.Name = "lblRecentMntTitle"
-        Me.lblRecentMntTitle.Size = New System.Drawing.Size(64, 18)
+        Me.lblRecentMntTitle.Size = New System.Drawing.Size(72, 18)
         Me.lblRecentMntTitle.TabIndex = 13
         Me.lblRecentMntTitle.Text = "最近の記録"
         '
@@ -1114,15 +1145,17 @@ Partial Class FrmMain
         Me.lstMntLog.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lstMntLog.Font = New System.Drawing.Font("MS UI Gothic", 9.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lstMntLog.HorizontalScrollbar = True
-        Me.lstMntLog.Location = New System.Drawing.Point(72, 336)
+        Me.lstMntLog.Location = New System.Drawing.Point(80, 336)
         Me.lstMntLog.Name = "lstMntLog"
-        Me.lstMntLog.Size = New System.Drawing.Size(509, 134)
+        Me.lstMntLog.Size = New System.Drawing.Size(501, 134)
         Me.lstMntLog.TabIndex = 14
         '
         'tabKisyu
         '
         Me.tabKisyu.Controls.Add(Me.btnCopyKisyu)
+        Me.tabKisyu.Controls.Add(Me.btnEditKisyu)
         Me.tabKisyu.Controls.Add(Me.lblPcTitle)
         Me.tabKisyu.Controls.Add(Me.txtPc0)
         Me.tabKisyu.Controls.Add(Me.txtPc1)
@@ -1153,37 +1186,47 @@ Partial Class FrmMain
         Me.tabKisyu.Controls.Add(Me.txtLeaseStDate)
         Me.tabKisyu.Controls.Add(Me.txtLease1)
         Me.tabKisyu.Controls.Add(Me.txtLease2)
+        Me.tabKisyu.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.tabKisyu.Location = New System.Drawing.Point(4, 22)
         Me.tabKisyu.Name = "tabKisyu"
-        Me.tabKisyu.Size = New System.Drawing.Size(592, 490)
+        Me.tabKisyu.Size = New System.Drawing.Size(592, 488)
         Me.tabKisyu.TabIndex = 1
         Me.tabKisyu.Text = "使用機種"
         Me.tabKisyu.UseVisualStyleBackColor = True
         '
         'btnCopyKisyu
         '
-        Me.btnCopyKisyu.Location = New System.Drawing.Point(12, 10)
+        Me.btnCopyKisyu.Location = New System.Drawing.Point(12, 8)
         Me.btnCopyKisyu.Name = "btnCopyKisyu"
-        Me.btnCopyKisyu.Size = New System.Drawing.Size(120, 26)
+        Me.btnCopyKisyu.Size = New System.Drawing.Size(140, 28)
         Me.btnCopyKisyu.TabIndex = 0
         Me.btnCopyKisyu.Text = "機種情報コピー"
         Me.btnCopyKisyu.UseVisualStyleBackColor = True
         '
+        'btnEditKisyu
+        '
+        Me.btnEditKisyu.Location = New System.Drawing.Point(160, 8)
+        Me.btnEditKisyu.Name = "btnEditKisyu"
+        Me.btnEditKisyu.Size = New System.Drawing.Size(140, 28)
+        Me.btnEditKisyu.TabIndex = 1
+        Me.btnEditKisyu.Text = "機種情報編集"
+        Me.btnEditKisyu.UseVisualStyleBackColor = True
+        '
         'lblPcTitle
         '
-        Me.lblPcTitle.Location = New System.Drawing.Point(12, 46)
+        Me.lblPcTitle.Location = New System.Drawing.Point(12, 44)
         Me.lblPcTitle.Name = "lblPcTitle"
-        Me.lblPcTitle.Size = New System.Drawing.Size(72, 18)
+        Me.lblPcTitle.Size = New System.Drawing.Size(88, 20)
         Me.lblPcTitle.TabIndex = 1
         Me.lblPcTitle.Text = "本体"
         '
         'txtPc0
         '
         Me.txtPc0.BackColor = System.Drawing.Color.White
-        Me.txtPc0.Location = New System.Drawing.Point(90, 42)
+        Me.txtPc0.Location = New System.Drawing.Point(104, 42)
         Me.txtPc0.Name = "txtPc0"
         Me.txtPc0.ReadOnly = True
-        Me.txtPc0.Size = New System.Drawing.Size(230, 20)
+        Me.txtPc0.Size = New System.Drawing.Size(218, 23)
         Me.txtPc0.TabIndex = 2
         '
         'txtPc1
@@ -1191,27 +1234,27 @@ Partial Class FrmMain
         Me.txtPc1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtPc1.BackColor = System.Drawing.Color.White
-        Me.txtPc1.Location = New System.Drawing.Point(326, 42)
+        Me.txtPc1.Location = New System.Drawing.Point(328, 42)
         Me.txtPc1.Name = "txtPc1"
         Me.txtPc1.ReadOnly = True
-        Me.txtPc1.Size = New System.Drawing.Size(253, 20)
+        Me.txtPc1.Size = New System.Drawing.Size(251, 23)
         Me.txtPc1.TabIndex = 3
         '
         'lblPrtTitle
         '
-        Me.lblPrtTitle.Location = New System.Drawing.Point(12, 74)
+        Me.lblPrtTitle.Location = New System.Drawing.Point(12, 72)
         Me.lblPrtTitle.Name = "lblPrtTitle"
-        Me.lblPrtTitle.Size = New System.Drawing.Size(72, 18)
+        Me.lblPrtTitle.Size = New System.Drawing.Size(88, 20)
         Me.lblPrtTitle.TabIndex = 4
         Me.lblPrtTitle.Text = "プリンタ"
         '
         'txtPrt0
         '
         Me.txtPrt0.BackColor = System.Drawing.Color.White
-        Me.txtPrt0.Location = New System.Drawing.Point(90, 70)
+        Me.txtPrt0.Location = New System.Drawing.Point(104, 70)
         Me.txtPrt0.Name = "txtPrt0"
         Me.txtPrt0.ReadOnly = True
-        Me.txtPrt0.Size = New System.Drawing.Size(230, 20)
+        Me.txtPrt0.Size = New System.Drawing.Size(218, 23)
         Me.txtPrt0.TabIndex = 5
         '
         'txtPrt1
@@ -1219,27 +1262,27 @@ Partial Class FrmMain
         Me.txtPrt1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtPrt1.BackColor = System.Drawing.Color.White
-        Me.txtPrt1.Location = New System.Drawing.Point(326, 70)
+        Me.txtPrt1.Location = New System.Drawing.Point(328, 70)
         Me.txtPrt1.Name = "txtPrt1"
         Me.txtPrt1.ReadOnly = True
-        Me.txtPrt1.Size = New System.Drawing.Size(253, 20)
+        Me.txtPrt1.Size = New System.Drawing.Size(251, 23)
         Me.txtPrt1.TabIndex = 6
         '
         'lblMnTitle
         '
-        Me.lblMnTitle.Location = New System.Drawing.Point(12, 102)
+        Me.lblMnTitle.Location = New System.Drawing.Point(12, 100)
         Me.lblMnTitle.Name = "lblMnTitle"
-        Me.lblMnTitle.Size = New System.Drawing.Size(72, 18)
+        Me.lblMnTitle.Size = New System.Drawing.Size(88, 20)
         Me.lblMnTitle.TabIndex = 7
         Me.lblMnTitle.Text = "モニタ"
         '
         'txtMn0
         '
         Me.txtMn0.BackColor = System.Drawing.Color.White
-        Me.txtMn0.Location = New System.Drawing.Point(90, 98)
+        Me.txtMn0.Location = New System.Drawing.Point(104, 98)
         Me.txtMn0.Name = "txtMn0"
         Me.txtMn0.ReadOnly = True
-        Me.txtMn0.Size = New System.Drawing.Size(230, 20)
+        Me.txtMn0.Size = New System.Drawing.Size(218, 23)
         Me.txtMn0.TabIndex = 8
         '
         'txtMn1
@@ -1247,27 +1290,27 @@ Partial Class FrmMain
         Me.txtMn1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtMn1.BackColor = System.Drawing.Color.White
-        Me.txtMn1.Location = New System.Drawing.Point(326, 98)
+        Me.txtMn1.Location = New System.Drawing.Point(328, 98)
         Me.txtMn1.Name = "txtMn1"
         Me.txtMn1.ReadOnly = True
-        Me.txtMn1.Size = New System.Drawing.Size(253, 20)
+        Me.txtMn1.Size = New System.Drawing.Size(251, 23)
         Me.txtMn1.TabIndex = 9
         '
         'lblBcrTitle
         '
-        Me.lblBcrTitle.Location = New System.Drawing.Point(12, 130)
+        Me.lblBcrTitle.Location = New System.Drawing.Point(12, 128)
         Me.lblBcrTitle.Name = "lblBcrTitle"
-        Me.lblBcrTitle.Size = New System.Drawing.Size(72, 18)
+        Me.lblBcrTitle.Size = New System.Drawing.Size(88, 20)
         Me.lblBcrTitle.TabIndex = 10
         Me.lblBcrTitle.Text = "BCR"
         '
         'txtBcr0
         '
         Me.txtBcr0.BackColor = System.Drawing.Color.White
-        Me.txtBcr0.Location = New System.Drawing.Point(90, 126)
+        Me.txtBcr0.Location = New System.Drawing.Point(104, 126)
         Me.txtBcr0.Name = "txtBcr0"
         Me.txtBcr0.ReadOnly = True
-        Me.txtBcr0.Size = New System.Drawing.Size(230, 20)
+        Me.txtBcr0.Size = New System.Drawing.Size(218, 23)
         Me.txtBcr0.TabIndex = 11
         '
         'txtBcr1
@@ -1275,27 +1318,27 @@ Partial Class FrmMain
         Me.txtBcr1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtBcr1.BackColor = System.Drawing.Color.White
-        Me.txtBcr1.Location = New System.Drawing.Point(326, 126)
+        Me.txtBcr1.Location = New System.Drawing.Point(328, 126)
         Me.txtBcr1.Name = "txtBcr1"
         Me.txtBcr1.ReadOnly = True
-        Me.txtBcr1.Size = New System.Drawing.Size(253, 20)
+        Me.txtBcr1.Size = New System.Drawing.Size(251, 23)
         Me.txtBcr1.TabIndex = 12
         '
         'lblHddTitle
         '
-        Me.lblHddTitle.Location = New System.Drawing.Point(12, 158)
+        Me.lblHddTitle.Location = New System.Drawing.Point(12, 156)
         Me.lblHddTitle.Name = "lblHddTitle"
-        Me.lblHddTitle.Size = New System.Drawing.Size(72, 18)
+        Me.lblHddTitle.Size = New System.Drawing.Size(88, 20)
         Me.lblHddTitle.TabIndex = 13
         Me.lblHddTitle.Text = "BkUp(HDD)"
         '
         'txtHdd0
         '
         Me.txtHdd0.BackColor = System.Drawing.Color.White
-        Me.txtHdd0.Location = New System.Drawing.Point(90, 154)
+        Me.txtHdd0.Location = New System.Drawing.Point(104, 154)
         Me.txtHdd0.Name = "txtHdd0"
         Me.txtHdd0.ReadOnly = True
-        Me.txtHdd0.Size = New System.Drawing.Size(230, 20)
+        Me.txtHdd0.Size = New System.Drawing.Size(218, 23)
         Me.txtHdd0.TabIndex = 14
         '
         'txtHdd1
@@ -1303,27 +1346,27 @@ Partial Class FrmMain
         Me.txtHdd1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtHdd1.BackColor = System.Drawing.Color.White
-        Me.txtHdd1.Location = New System.Drawing.Point(326, 154)
+        Me.txtHdd1.Location = New System.Drawing.Point(328, 154)
         Me.txtHdd1.Name = "txtHdd1"
         Me.txtHdd1.ReadOnly = True
-        Me.txtHdd1.Size = New System.Drawing.Size(253, 20)
+        Me.txtHdd1.Size = New System.Drawing.Size(251, 23)
         Me.txtHdd1.TabIndex = 15
         '
         'lblMiniPrtTitle
         '
-        Me.lblMiniPrtTitle.Location = New System.Drawing.Point(12, 186)
+        Me.lblMiniPrtTitle.Location = New System.Drawing.Point(12, 184)
         Me.lblMiniPrtTitle.Name = "lblMiniPrtTitle"
-        Me.lblMiniPrtTitle.Size = New System.Drawing.Size(76, 18)
+        Me.lblMiniPrtTitle.Size = New System.Drawing.Size(88, 20)
         Me.lblMiniPrtTitle.TabIndex = 16
         Me.lblMiniPrtTitle.Text = "小型プリンタ"
         '
         'txtMiniPrt0
         '
         Me.txtMiniPrt0.BackColor = System.Drawing.Color.White
-        Me.txtMiniPrt0.Location = New System.Drawing.Point(90, 182)
+        Me.txtMiniPrt0.Location = New System.Drawing.Point(104, 182)
         Me.txtMiniPrt0.Name = "txtMiniPrt0"
         Me.txtMiniPrt0.ReadOnly = True
-        Me.txtMiniPrt0.Size = New System.Drawing.Size(230, 20)
+        Me.txtMiniPrt0.Size = New System.Drawing.Size(218, 23)
         Me.txtMiniPrt0.TabIndex = 17
         '
         'txtMiniPrt1
@@ -1331,34 +1374,34 @@ Partial Class FrmMain
         Me.txtMiniPrt1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtMiniPrt1.BackColor = System.Drawing.Color.White
-        Me.txtMiniPrt1.Location = New System.Drawing.Point(326, 182)
+        Me.txtMiniPrt1.Location = New System.Drawing.Point(328, 182)
         Me.txtMiniPrt1.Name = "txtMiniPrt1"
         Me.txtMiniPrt1.ReadOnly = True
-        Me.txtMiniPrt1.Size = New System.Drawing.Size(253, 20)
+        Me.txtMiniPrt1.Size = New System.Drawing.Size(251, 23)
         Me.txtMiniPrt1.TabIndex = 18
         '
         'lblNohinTitle
         '
-        Me.lblNohinTitle.Location = New System.Drawing.Point(12, 222)
+        Me.lblNohinTitle.Location = New System.Drawing.Point(12, 218)
         Me.lblNohinTitle.Name = "lblNohinTitle"
-        Me.lblNohinTitle.Size = New System.Drawing.Size(72, 18)
+        Me.lblNohinTitle.Size = New System.Drawing.Size(88, 20)
         Me.lblNohinTitle.TabIndex = 19
         Me.lblNohinTitle.Text = "納品日"
         '
         'txtNohin
         '
         Me.txtNohin.BackColor = System.Drawing.Color.White
-        Me.txtNohin.Location = New System.Drawing.Point(90, 218)
+        Me.txtNohin.Location = New System.Drawing.Point(104, 216)
         Me.txtNohin.Name = "txtNohin"
         Me.txtNohin.ReadOnly = True
-        Me.txtNohin.Size = New System.Drawing.Size(150, 20)
+        Me.txtNohin.Size = New System.Drawing.Size(140, 23)
         Me.txtNohin.TabIndex = 20
         '
         'lblTantoTitle
         '
-        Me.lblTantoTitle.Location = New System.Drawing.Point(252, 222)
+        Me.lblTantoTitle.Location = New System.Drawing.Point(252, 218)
         Me.lblTantoTitle.Name = "lblTantoTitle"
-        Me.lblTantoTitle.Size = New System.Drawing.Size(42, 18)
+        Me.lblTantoTitle.Size = New System.Drawing.Size(46, 20)
         Me.lblTantoTitle.TabIndex = 21
         Me.lblTantoTitle.Text = "担当"
         '
@@ -1367,17 +1410,17 @@ Partial Class FrmMain
         Me.txtTanto.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtTanto.BackColor = System.Drawing.Color.White
-        Me.txtTanto.Location = New System.Drawing.Point(296, 218)
+        Me.txtTanto.Location = New System.Drawing.Point(302, 216)
         Me.txtTanto.Name = "txtTanto"
         Me.txtTanto.ReadOnly = True
-        Me.txtTanto.Size = New System.Drawing.Size(283, 20)
+        Me.txtTanto.Size = New System.Drawing.Size(277, 23)
         Me.txtTanto.TabIndex = 22
         '
         'lblLicenseTitle
         '
-        Me.lblLicenseTitle.Location = New System.Drawing.Point(12, 252)
+        Me.lblLicenseTitle.Location = New System.Drawing.Point(12, 248)
         Me.lblLicenseTitle.Name = "lblLicenseTitle"
-        Me.lblLicenseTitle.Size = New System.Drawing.Size(72, 18)
+        Me.lblLicenseTitle.Size = New System.Drawing.Size(88, 20)
         Me.lblLicenseTitle.TabIndex = 23
         Me.lblLicenseTitle.Text = "ライセンス"
         '
@@ -1386,36 +1429,36 @@ Partial Class FrmMain
         Me.txtLicense.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtLicense.BackColor = System.Drawing.Color.White
-        Me.txtLicense.Location = New System.Drawing.Point(90, 248)
+        Me.txtLicense.Location = New System.Drawing.Point(104, 246)
         Me.txtLicense.Name = "txtLicense"
         Me.txtLicense.ReadOnly = True
-        Me.txtLicense.Size = New System.Drawing.Size(489, 20)
+        Me.txtLicense.Size = New System.Drawing.Size(475, 23)
         Me.txtLicense.TabIndex = 24
         '
         'lblLeaseTitle
         '
-        Me.lblLeaseTitle.Location = New System.Drawing.Point(12, 284)
+        Me.lblLeaseTitle.Location = New System.Drawing.Point(12, 280)
         Me.lblLeaseTitle.Name = "lblLeaseTitle"
-        Me.lblLeaseTitle.Size = New System.Drawing.Size(72, 18)
+        Me.lblLeaseTitle.Size = New System.Drawing.Size(88, 20)
         Me.lblLeaseTitle.TabIndex = 25
         Me.lblLeaseTitle.Text = "リース等"
         '
         'txtSiharai
         '
         Me.txtSiharai.BackColor = System.Drawing.Color.White
-        Me.txtSiharai.Location = New System.Drawing.Point(90, 280)
+        Me.txtSiharai.Location = New System.Drawing.Point(104, 278)
         Me.txtSiharai.Name = "txtSiharai"
         Me.txtSiharai.ReadOnly = True
-        Me.txtSiharai.Size = New System.Drawing.Size(80, 20)
+        Me.txtSiharai.Size = New System.Drawing.Size(76, 23)
         Me.txtSiharai.TabIndex = 26
         '
         'txtLeaseCo
         '
         Me.txtLeaseCo.BackColor = System.Drawing.Color.White
-        Me.txtLeaseCo.Location = New System.Drawing.Point(176, 280)
+        Me.txtLeaseCo.Location = New System.Drawing.Point(184, 278)
         Me.txtLeaseCo.Name = "txtLeaseCo"
         Me.txtLeaseCo.ReadOnly = True
-        Me.txtLeaseCo.Size = New System.Drawing.Size(200, 20)
+        Me.txtLeaseCo.Size = New System.Drawing.Size(190, 23)
         Me.txtLeaseCo.TabIndex = 27
         '
         'txtLeaseStDate
@@ -1423,19 +1466,19 @@ Partial Class FrmMain
         Me.txtLeaseStDate.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtLeaseStDate.BackColor = System.Drawing.Color.White
-        Me.txtLeaseStDate.Location = New System.Drawing.Point(382, 280)
+        Me.txtLeaseStDate.Location = New System.Drawing.Point(378, 278)
         Me.txtLeaseStDate.Name = "txtLeaseStDate"
         Me.txtLeaseStDate.ReadOnly = True
-        Me.txtLeaseStDate.Size = New System.Drawing.Size(197, 20)
+        Me.txtLeaseStDate.Size = New System.Drawing.Size(201, 23)
         Me.txtLeaseStDate.TabIndex = 28
         '
         'txtLease1
         '
         Me.txtLease1.BackColor = System.Drawing.Color.White
-        Me.txtLease1.Location = New System.Drawing.Point(90, 308)
+        Me.txtLease1.Location = New System.Drawing.Point(104, 308)
         Me.txtLease1.Name = "txtLease1"
         Me.txtLease1.ReadOnly = True
-        Me.txtLease1.Size = New System.Drawing.Size(240, 20)
+        Me.txtLease1.Size = New System.Drawing.Size(234, 23)
         Me.txtLease1.TabIndex = 29
         '
         'txtLease2
@@ -1443,10 +1486,10 @@ Partial Class FrmMain
         Me.txtLease2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtLease2.BackColor = System.Drawing.Color.White
-        Me.txtLease2.Location = New System.Drawing.Point(336, 308)
+        Me.txtLease2.Location = New System.Drawing.Point(344, 308)
         Me.txtLease2.Name = "txtLease2"
         Me.txtLease2.ReadOnly = True
-        Me.txtLease2.Size = New System.Drawing.Size(243, 20)
+        Me.txtLease2.Size = New System.Drawing.Size(235, 23)
         Me.txtLease2.TabIndex = 30
         '
         'tabJitaku
@@ -1470,69 +1513,70 @@ Partial Class FrmMain
         Me.tabJitaku.Controls.Add(Me.txtVupAdd)
         Me.tabJitaku.Controls.Add(Me.lblPcAddTitle)
         Me.tabJitaku.Controls.Add(Me.txtPcAdd)
+        Me.tabJitaku.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.tabJitaku.Location = New System.Drawing.Point(4, 22)
         Me.tabJitaku.Name = "tabJitaku"
-        Me.tabJitaku.Size = New System.Drawing.Size(592, 490)
+        Me.tabJitaku.Size = New System.Drawing.Size(592, 488)
         Me.tabJitaku.TabIndex = 2
         Me.tabJitaku.Text = "自宅"
         Me.tabJitaku.UseVisualStyleBackColor = True
         '
         'lblMhTelTitle
         '
-        Me.lblMhTelTitle.Location = New System.Drawing.Point(12, 16)
+        Me.lblMhTelTitle.Location = New System.Drawing.Point(12, 14)
         Me.lblMhTelTitle.Name = "lblMhTelTitle"
-        Me.lblMhTelTitle.Size = New System.Drawing.Size(72, 18)
+        Me.lblMhTelTitle.Size = New System.Drawing.Size(88, 20)
         Me.lblMhTelTitle.TabIndex = 0
         Me.lblMhTelTitle.Text = "自宅電話"
         '
         'txtMhTel
         '
         Me.txtMhTel.BackColor = System.Drawing.Color.White
-        Me.txtMhTel.Location = New System.Drawing.Point(90, 12)
+        Me.txtMhTel.Location = New System.Drawing.Point(104, 12)
         Me.txtMhTel.Name = "txtMhTel"
         Me.txtMhTel.ReadOnly = True
-        Me.txtMhTel.Size = New System.Drawing.Size(170, 20)
+        Me.txtMhTel.Size = New System.Drawing.Size(160, 23)
         Me.txtMhTel.TabIndex = 1
         '
         'lblMbTelTitle
         '
-        Me.lblMbTelTitle.Location = New System.Drawing.Point(12, 44)
+        Me.lblMbTelTitle.Location = New System.Drawing.Point(12, 42)
         Me.lblMbTelTitle.Name = "lblMbTelTitle"
-        Me.lblMbTelTitle.Size = New System.Drawing.Size(72, 18)
+        Me.lblMbTelTitle.Size = New System.Drawing.Size(88, 20)
         Me.lblMbTelTitle.TabIndex = 2
         Me.lblMbTelTitle.Text = "携帯番号"
         '
         'txtMbTel
         '
         Me.txtMbTel.BackColor = System.Drawing.Color.White
-        Me.txtMbTel.Location = New System.Drawing.Point(90, 40)
+        Me.txtMbTel.Location = New System.Drawing.Point(104, 40)
         Me.txtMbTel.Name = "txtMbTel"
         Me.txtMbTel.ReadOnly = True
-        Me.txtMbTel.Size = New System.Drawing.Size(170, 20)
+        Me.txtMbTel.Size = New System.Drawing.Size(160, 23)
         Me.txtMbTel.TabIndex = 3
         '
         'lblFaxTitle
         '
-        Me.lblFaxTitle.Location = New System.Drawing.Point(12, 72)
+        Me.lblFaxTitle.Location = New System.Drawing.Point(12, 70)
         Me.lblFaxTitle.Name = "lblFaxTitle"
-        Me.lblFaxTitle.Size = New System.Drawing.Size(72, 18)
+        Me.lblFaxTitle.Size = New System.Drawing.Size(88, 20)
         Me.lblFaxTitle.TabIndex = 4
         Me.lblFaxTitle.Text = "FAX番号"
         '
         'txtFax
         '
         Me.txtFax.BackColor = System.Drawing.Color.White
-        Me.txtFax.Location = New System.Drawing.Point(90, 68)
+        Me.txtFax.Location = New System.Drawing.Point(104, 68)
         Me.txtFax.Name = "txtFax"
         Me.txtFax.ReadOnly = True
-        Me.txtFax.Size = New System.Drawing.Size(170, 20)
+        Me.txtFax.Size = New System.Drawing.Size(160, 23)
         Me.txtFax.TabIndex = 5
         '
         'lblTelExTitle
         '
-        Me.lblTelExTitle.Location = New System.Drawing.Point(272, 16)
+        Me.lblTelExTitle.Location = New System.Drawing.Point(272, 14)
         Me.lblTelExTitle.Name = "lblTelExTitle"
-        Me.lblTelExTitle.Size = New System.Drawing.Size(72, 18)
+        Me.lblTelExTitle.Size = New System.Drawing.Size(88, 20)
         Me.lblTelExTitle.TabIndex = 6
         Me.lblTelExTitle.Text = "その他電話"
         '
@@ -1540,7 +1584,7 @@ Partial Class FrmMain
         '
         Me.btnTelExEdit.Location = New System.Drawing.Point(272, 38)
         Me.btnTelExEdit.Name = "btnTelExEdit"
-        Me.btnTelExEdit.Size = New System.Drawing.Size(66, 25)
+        Me.btnTelExEdit.Size = New System.Drawing.Size(84, 28)
         Me.btnTelExEdit.TabIndex = 7
         Me.btnTelExEdit.Text = "編集"
         Me.btnTelExEdit.UseVisualStyleBackColor = True
@@ -1548,53 +1592,53 @@ Partial Class FrmMain
         'txtTelEx0
         '
         Me.txtTelEx0.BackColor = System.Drawing.Color.White
-        Me.txtTelEx0.Location = New System.Drawing.Point(346, 12)
+        Me.txtTelEx0.Location = New System.Drawing.Point(362, 12)
         Me.txtTelEx0.Name = "txtTelEx0"
         Me.txtTelEx0.ReadOnly = True
-        Me.txtTelEx0.Size = New System.Drawing.Size(115, 20)
+        Me.txtTelEx0.Size = New System.Drawing.Size(108, 23)
         Me.txtTelEx0.TabIndex = 8
         '
         'txtTelEx1
         '
         Me.txtTelEx1.BackColor = System.Drawing.Color.White
-        Me.txtTelEx1.Location = New System.Drawing.Point(465, 12)
+        Me.txtTelEx1.Location = New System.Drawing.Point(476, 12)
         Me.txtTelEx1.Name = "txtTelEx1"
         Me.txtTelEx1.ReadOnly = True
-        Me.txtTelEx1.Size = New System.Drawing.Size(115, 20)
+        Me.txtTelEx1.Size = New System.Drawing.Size(108, 23)
         Me.txtTelEx1.TabIndex = 9
         '
         'txtTelEx2
         '
         Me.txtTelEx2.BackColor = System.Drawing.Color.White
-        Me.txtTelEx2.Location = New System.Drawing.Point(346, 38)
+        Me.txtTelEx2.Location = New System.Drawing.Point(362, 38)
         Me.txtTelEx2.Name = "txtTelEx2"
         Me.txtTelEx2.ReadOnly = True
-        Me.txtTelEx2.Size = New System.Drawing.Size(115, 20)
+        Me.txtTelEx2.Size = New System.Drawing.Size(108, 23)
         Me.txtTelEx2.TabIndex = 10
         '
         'txtTelEx3
         '
         Me.txtTelEx3.BackColor = System.Drawing.Color.White
-        Me.txtTelEx3.Location = New System.Drawing.Point(465, 38)
+        Me.txtTelEx3.Location = New System.Drawing.Point(476, 38)
         Me.txtTelEx3.Name = "txtTelEx3"
         Me.txtTelEx3.ReadOnly = True
-        Me.txtTelEx3.Size = New System.Drawing.Size(115, 20)
+        Me.txtTelEx3.Size = New System.Drawing.Size(108, 23)
         Me.txtTelEx3.TabIndex = 11
         '
         'txtTelEx4
         '
         Me.txtTelEx4.BackColor = System.Drawing.Color.White
-        Me.txtTelEx4.Location = New System.Drawing.Point(346, 64)
+        Me.txtTelEx4.Location = New System.Drawing.Point(362, 64)
         Me.txtTelEx4.Name = "txtTelEx4"
         Me.txtTelEx4.ReadOnly = True
-        Me.txtTelEx4.Size = New System.Drawing.Size(115, 20)
+        Me.txtTelEx4.Size = New System.Drawing.Size(108, 23)
         Me.txtTelEx4.TabIndex = 12
         '
         'lblMhAddTitle
         '
-        Me.lblMhAddTitle.Location = New System.Drawing.Point(12, 104)
+        Me.lblMhAddTitle.Location = New System.Drawing.Point(12, 102)
         Me.lblMhAddTitle.Name = "lblMhAddTitle"
-        Me.lblMhAddTitle.Size = New System.Drawing.Size(72, 18)
+        Me.lblMhAddTitle.Size = New System.Drawing.Size(88, 20)
         Me.lblMhAddTitle.TabIndex = 13
         Me.lblMhAddTitle.Text = "自宅住所"
         '
@@ -1603,19 +1647,19 @@ Partial Class FrmMain
         Me.txtMhAdd.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtMhAdd.BackColor = System.Drawing.Color.White
-        Me.txtMhAdd.Location = New System.Drawing.Point(90, 100)
+        Me.txtMhAdd.Location = New System.Drawing.Point(104, 98)
         Me.txtMhAdd.Multiline = True
         Me.txtMhAdd.Name = "txtMhAdd"
         Me.txtMhAdd.ReadOnly = True
         Me.txtMhAdd.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.txtMhAdd.Size = New System.Drawing.Size(489, 54)
+        Me.txtMhAdd.Size = New System.Drawing.Size(475, 58)
         Me.txtMhAdd.TabIndex = 14
         '
         'lblVupAddTitle
         '
         Me.lblVupAddTitle.Location = New System.Drawing.Point(12, 168)
         Me.lblVupAddTitle.Name = "lblVupAddTitle"
-        Me.lblVupAddTitle.Size = New System.Drawing.Size(76, 18)
+        Me.lblVupAddTitle.Size = New System.Drawing.Size(88, 20)
         Me.lblVupAddTitle.TabIndex = 15
         Me.lblVupAddTitle.Text = "Vup送付先"
         Me.lblVupAddTitle.Visible = False
@@ -1625,12 +1669,12 @@ Partial Class FrmMain
         Me.txtVupAdd.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtVupAdd.BackColor = System.Drawing.Color.FromArgb(CType(CType(250, Byte), Integer), CType(CType(244, Byte), Integer), CType(CType(226, Byte), Integer))
-        Me.txtVupAdd.Location = New System.Drawing.Point(90, 164)
+        Me.txtVupAdd.Location = New System.Drawing.Point(104, 164)
         Me.txtVupAdd.Multiline = True
         Me.txtVupAdd.Name = "txtVupAdd"
         Me.txtVupAdd.ReadOnly = True
         Me.txtVupAdd.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.txtVupAdd.Size = New System.Drawing.Size(489, 68)
+        Me.txtVupAdd.Size = New System.Drawing.Size(475, 68)
         Me.txtVupAdd.TabIndex = 16
         Me.txtVupAdd.Visible = False
         '
@@ -1638,7 +1682,7 @@ Partial Class FrmMain
         '
         Me.lblPcAddTitle.Location = New System.Drawing.Point(12, 244)
         Me.lblPcAddTitle.Name = "lblPcAddTitle"
-        Me.lblPcAddTitle.Size = New System.Drawing.Size(78, 18)
+        Me.lblPcAddTitle.Size = New System.Drawing.Size(88, 20)
         Me.lblPcAddTitle.TabIndex = 17
         Me.lblPcAddTitle.Text = "機械設置場所"
         Me.lblPcAddTitle.Visible = False
@@ -1648,12 +1692,12 @@ Partial Class FrmMain
         Me.txtPcAdd.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtPcAdd.BackColor = System.Drawing.Color.FromArgb(CType(CType(250, Byte), Integer), CType(CType(244, Byte), Integer), CType(CType(226, Byte), Integer))
-        Me.txtPcAdd.Location = New System.Drawing.Point(90, 240)
+        Me.txtPcAdd.Location = New System.Drawing.Point(104, 240)
         Me.txtPcAdd.Multiline = True
         Me.txtPcAdd.Name = "txtPcAdd"
         Me.txtPcAdd.ReadOnly = True
         Me.txtPcAdd.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.txtPcAdd.Size = New System.Drawing.Size(489, 68)
+        Me.txtPcAdd.Size = New System.Drawing.Size(475, 68)
         Me.txtPcAdd.TabIndex = 18
         Me.txtPcAdd.Visible = False
         '
@@ -1663,7 +1707,7 @@ Partial Class FrmMain
         Me.tabMnt.Controls.Add(Me.pnlMntTop)
         Me.tabMnt.Location = New System.Drawing.Point(4, 22)
         Me.tabMnt.Name = "tabMnt"
-        Me.tabMnt.Size = New System.Drawing.Size(592, 490)
+        Me.tabMnt.Size = New System.Drawing.Size(592, 488)
         Me.tabMnt.TabIndex = 3
         Me.tabMnt.Text = "メンテナンス"
         Me.tabMnt.UseVisualStyleBackColor = True
@@ -1682,8 +1726,8 @@ Partial Class FrmMain
         'splitMnt.Panel2
         '
         Me.splitMnt.Panel2.Controls.Add(Me.txtMntSelectedContent)
-        Me.splitMnt.Size = New System.Drawing.Size(592, 430)
-        Me.splitMnt.SplitterDistance = 280
+        Me.splitMnt.Size = New System.Drawing.Size(592, 428)
+        Me.splitMnt.SplitterDistance = 278
         Me.splitMnt.TabIndex = 1
         '
         'dgvMntUsr
@@ -1698,7 +1742,7 @@ Partial Class FrmMain
         Me.dgvMntUsr.ReadOnly = True
         Me.dgvMntUsr.RowHeadersVisible = False
         Me.dgvMntUsr.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgvMntUsr.Size = New System.Drawing.Size(592, 280)
+        Me.dgvMntUsr.Size = New System.Drawing.Size(592, 278)
         Me.dgvMntUsr.TabIndex = 0
         '
         'txtMntSelectedContent
@@ -1854,7 +1898,7 @@ Partial Class FrmMain
         Me.tabMemoMap.Controls.Add(Me.splitMemoMap)
         Me.tabMemoMap.Location = New System.Drawing.Point(4, 22)
         Me.tabMemoMap.Name = "tabMemoMap"
-        Me.tabMemoMap.Size = New System.Drawing.Size(592, 490)
+        Me.tabMemoMap.Size = New System.Drawing.Size(592, 488)
         Me.tabMemoMap.TabIndex = 4
         Me.tabMemoMap.Text = "メモ・地図"
         Me.tabMemoMap.UseVisualStyleBackColor = True
@@ -1879,8 +1923,8 @@ Partial Class FrmMain
         '
         Me.splitMemoMap.Panel2.Controls.Add(Me.picMap)
         Me.splitMemoMap.Panel2.Controls.Add(Me.pnlMapToolbar)
-        Me.splitMemoMap.Size = New System.Drawing.Size(592, 490)
-        Me.splitMemoMap.SplitterDistance = 158
+        Me.splitMemoMap.Size = New System.Drawing.Size(592, 488)
+        Me.splitMemoMap.SplitterDistance = 157
         Me.splitMemoMap.TabIndex = 0
         '
         'lblTabMemoTitle
@@ -1911,7 +1955,7 @@ Partial Class FrmMain
         Me.txtPmemo.Name = "txtPmemo"
         Me.txtPmemo.ReadOnly = True
         Me.txtPmemo.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.txtPmemo.Size = New System.Drawing.Size(280, 120)
+        Me.txtPmemo.Size = New System.Drawing.Size(280, 119)
         Me.txtPmemo.TabIndex = 2
         '
         'lblPcPMemoTitle
@@ -1944,7 +1988,7 @@ Partial Class FrmMain
         Me.txtPcPMemo.Name = "txtPcPMemo"
         Me.txtPcPMemo.ReadOnly = True
         Me.txtPcPMemo.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.txtPcPMemo.Size = New System.Drawing.Size(286, 120)
+        Me.txtPcPMemo.Size = New System.Drawing.Size(286, 119)
         Me.txtPcPMemo.TabIndex = 5
         '
         'picMap
@@ -1953,7 +1997,7 @@ Partial Class FrmMain
         Me.picMap.Dock = System.Windows.Forms.DockStyle.Fill
         Me.picMap.Location = New System.Drawing.Point(0, 32)
         Me.picMap.Name = "picMap"
-        Me.picMap.Size = New System.Drawing.Size(592, 296)
+        Me.picMap.Size = New System.Drawing.Size(592, 295)
         Me.picMap.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.picMap.TabIndex = 1
         Me.picMap.TabStop = False

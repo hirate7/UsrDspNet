@@ -1,3 +1,4 @@
+Imports System.Collections.Generic
 Imports System.Data
 Imports System.Data.OleDb
 Imports System.Windows.Forms
@@ -9,6 +10,7 @@ Public Class FrmPMemo
     Public Sub LoadPMemo(ByVal code As String, ByVal userTitle As String)
         TargetCode = GetNumAlp(code)
         lblUser.Text = userTitle
+        lblTantoInfo.Text = If(String.IsNullOrWhiteSpace(OptionDefaultSyainName), "担当: 未設定", $"担当: {OptionDefaultSyainName}")
         txtPmemo.Text = ""
 
         Try
@@ -88,6 +90,12 @@ Public Class FrmPMemo
                         End Using
                     End If
                 End If
+
+                ' ユーザーデータの履歴列に差分を保存
+                Dim changes As New List(Of UsrRrkChange)()
+                AddChangeIfDifferent(changes, "Pメモ", OldPMemo, txtPmemo.Text)
+                SaveUserHistoryChanges(TargetCode, changes)
+
                 OldPMemo = txtPmemo.Text
                 Me.DialogResult = DialogResult.OK
             Catch ex As Exception
@@ -101,6 +109,29 @@ Public Class FrmPMemo
     Private Sub cmdCancel_Click(sender As Object, e As EventArgs) Handles cmdCancel.Click
         Me.Close()
     End Sub
+
+    Private Sub btnHistory_Click(sender As Object, e As EventArgs) Handles btnHistory.Click
+        Using dlg As New FrmUsrRrkViewer()
+            dlg.ShowHistory(TargetCode, lblUser.Text, Me)
+        End Using
+    End Sub
+
+    Protected Overrides Function ProcessCmdKey(ByRef msg As Message, keyData As Keys) As Boolean
+        If keyData = (Keys.Alt Or Keys.W) Then
+            cmdWrite.PerformClick()
+            Return True
+        ElseIf keyData = (Keys.Alt Or Keys.C) Then
+            cmdCancel.PerformClick()
+            Return True
+        ElseIf keyData = (Keys.Alt Or Keys.H) Then
+            btnHistory.PerformClick()
+            Return True
+        ElseIf keyData = Keys.Escape Then
+            ' Escキーでの誤終了を防止
+            Return True
+        End If
+        Return MyBase.ProcessCmdKey(msg, keyData)
+    End Function
 
     Private Sub FrmPMemo_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
         If Me.DialogResult <> DialogResult.OK AndAlso txtPmemo.Text <> OldPMemo Then
