@@ -1,4 +1,4 @@
-Imports System.Data
+﻿Imports System.Data
 Imports System.Data.OleDb
 Imports System.Drawing
 Imports System.IO
@@ -17,6 +17,9 @@ Public Class FrmMain
     Private findDialog As New FindDlg()
     Private mntListForm As FrmMnt = Nothing
     Private mntFindForm As FrmMntFind = Nothing
+    Private LastSearchMode As Integer = 0
+    Private LastSearchText As String = ""
+    Private LastSearchOp As Integer = 0
 
     Private Const WM_SETICON As Integer = &H80
     Private Const ICON_SMALL As Integer = 0
@@ -151,6 +154,7 @@ Public Class FrmMain
 
     Private Sub mnuDspMode_Changed(sender As Object, e As EventArgs) Handles mnuDspNormal.Click, mnuDspSleep.Click, mnuDspDelete.Click
         UpdateDspModeStatus()
+        RefreshUserGrid(currentCode)
     End Sub
 
     Private Sub btnFindName_Click(sender As Object, e As EventArgs) Handles btnFindName.Click, mnuFindName.Click
@@ -192,26 +196,14 @@ Public Class FrmMain
     ' =========================================================================
     ' ユーザー一覧初期表示・検索処理 (DspFirst / FindUsr)
     ' =========================================================================
-    Public Sub DspFirst(Optional ByVal targetCd As String = "")
-        Dim sqlTxt As String = "SELECT 支部名, コード, 施術所名, 柔整師名, 電話番号, 削除, 〒, 住所1, 住所2, 分院Version, 本体機種名, 画面機種名, プリンター機種名, BCR機種名 " &
-                               "FROM ユーザーデータ WHERE " & GetDspFilterSql() & " ORDER BY コード"
-        stlSearchCond.Text = "検索条件: すべて"
-        Me.Text = "検索 - 検索条件: すべて"
-        LoadUserGrid(sqlTxt, targetCd)
-    End Sub
-
-    Public Sub FindUsr(ByVal Mode As Integer, ByVal defaultOp As Integer)
-        Dim fTxt As String = ""
-        Dim op As Integer = defaultOp
-        findDialog.FindInp(Mode, fTxt, op)
-        If op = -1 Then Return
-
-        If TrimX(fTxt) = "" Then op = 9
-
+    ''' <summary>
+    ''' 検索条件からSQLと条件テキストを生成
+    ''' </summary>
+    Private Function BuildSearchSql(ByVal Mode As Integer, ByVal fTxt As String, ByVal op As Integer, ByRef condText As String) As String
         Dim sqlBase As String = "SELECT 支部名, コード, 施術所名, 柔整師名, 電話番号, 削除, 〒, 住所1, 住所2, 分院Version, 本体機種名, 画面機種名, プリンター機種名, BCR機種名 FROM ユーザーデータ "
         Dim dspFilter As String = GetDspFilterSql()
         Dim sqlTxt As String = ""
-        Dim condText As String = "すべて"
+        condText = "すべて"
 
         Dim safeTxt As String = fTxt.Replace("""", """""")
 
@@ -225,7 +217,7 @@ Public Class FrmMain
                     Case 1
                         condText = $"名前 = {fTxt} を含む"
                         sqlTxt = $"{sqlBase} WHERE (フリガナ LIKE ""%{kanaTxt}%"" OR 施術所ﾌﾘｶﾞﾅ LIKE ""%{kanaTxt}%"" OR 施術所名 LIKE ""%{safeTxt}%"" OR 柔整師名 LIKE ""%{safeTxt}%"") AND {dspFilter} ORDER BY コード"
-                    Case 9
+                    Case Else
                         sqlTxt = $"{sqlBase} WHERE {dspFilter} ORDER BY コード"
                 End Select
 
@@ -237,7 +229,7 @@ Public Class FrmMain
                     Case 1
                         condText = $"支部 = {fTxt} を含む"
                         sqlTxt = $"{sqlBase} WHERE 支部名 LIKE ""%{safeTxt}%"" AND {dspFilter} ORDER BY コード"
-                    Case 9
+                    Case Else
                         sqlTxt = $"{sqlBase} WHERE {dspFilter} ORDER BY コード"
                 End Select
 
@@ -252,7 +244,7 @@ Public Class FrmMain
                         condText = $"電話番号 = {fTxt} を含む"
                         sqlTxt = $"{sqlBase} WHERE (コード IN (SELECT コード FROM 拡張データ WHERE 電話番号追加分1_ LIKE ""%{numTxt}%"" OR 電話番号追加分2_ LIKE ""%{numTxt}%"" OR 電話番号追加分3_ LIKE ""%{numTxt}%"" OR 電話番号追加分4_ LIKE ""%{numTxt}%"" OR 電話番号追加分5_ LIKE ""%{numTxt}%"") " &
                                  $"OR 電話番号_ LIKE ""%{numTxt}%"" OR 自宅電話_ LIKE ""%{numTxt}%"" OR 携帯_ LIKE ""%{numTxt}%"" OR FAX番号_ LIKE ""%{numTxt}%"") AND {dspFilter} ORDER BY コード"
-                    Case 9
+                    Case Else
                         sqlTxt = $"{sqlBase} WHERE {dspFilter} ORDER BY コード"
                 End Select
 
@@ -264,7 +256,7 @@ Public Class FrmMain
                     Case 1
                         condText = $"シリアルナンバー = {fTxt} を含む"
                         sqlTxt = $"{sqlBase} WHERE (本体SN LIKE ""%{safeTxt}%"" OR 画面SN LIKE ""%{safeTxt}%"" OR プリンターSN LIKE ""%{safeTxt}%"" OR BCRSN LIKE ""%{safeTxt}%"" OR HDDSN LIKE ""%{safeTxt}%"") AND {dspFilter} ORDER BY コード"
-                    Case 9
+                    Case Else
                         sqlTxt = $"{sqlBase} WHERE {dspFilter} ORDER BY コード"
                 End Select
 
@@ -276,7 +268,7 @@ Public Class FrmMain
                     Case 1
                         condText = $"製品名 = {fTxt} を含む"
                         sqlTxt = $"{sqlBase} WHERE (本体機種名 LIKE ""%{safeTxt}%"" OR 画面機種名 LIKE ""%{safeTxt}%"" OR プリンター機種名 LIKE ""%{safeTxt}%"" OR BCR機種名 LIKE ""%{safeTxt}%"" OR HDD機種名 LIKE ""%{safeTxt}%"") AND {dspFilter} ORDER BY コード"
-                    Case 9
+                    Case Else
                         sqlTxt = $"{sqlBase} WHERE {dspFilter} ORDER BY コード"
                 End Select
 
@@ -288,17 +280,62 @@ Public Class FrmMain
                     Case 1
                         condText = $"コード = {fTxt} を含む"
                         sqlTxt = $"{sqlBase} WHERE コード LIKE ""%{safeTxt}%"" AND {dspFilter} ORDER BY コード"
-                    Case 9
+                    Case Else
                         sqlTxt = $"{sqlBase} WHERE {dspFilter} ORDER BY コード"
                 End Select
+
+            Case Else
+                condText = "すべて"
+                sqlTxt = $"{sqlBase} WHERE {dspFilter} ORDER BY コード"
         End Select
+
+        Return sqlTxt
+    End Function
+
+    ''' <summary>
+    ''' 現在の検索条件のまま一覧グリッドを再クエリして再描画
+    ''' </summary>
+    Public Sub RefreshUserGrid(Optional ByVal preferredCd As String = "", Optional ByVal fallbackRowIndex As Integer = -1)
+        Dim targetCd As String = If(preferredCd <> "", preferredCd, currentCode)
+        Dim condText As String = ""
+        Dim sqlTxt As String = ""
+
+        If LastSearchMode = 0 Then
+            condText = "すべて"
+            sqlTxt = "SELECT 支部名, コード, 施術所名, 柔整師名, 電話番号, 削除, 〒, 住所1, 住所2, 分院Version, 本体機種名, 画面機種名, プリンター機種名, BCR機種名 " &
+                     "FROM ユーザーデータ WHERE " & GetDspFilterSql() & " ORDER BY コード"
+        Else
+            sqlTxt = BuildSearchSql(LastSearchMode, LastSearchText, LastSearchOp, condText)
+        End If
 
         stlSearchCond.Text = "検索条件: " & condText
         Me.Text = "検索 - 検索条件: " & condText
-        LoadUserGrid(sqlTxt)
+        LoadUserGrid(sqlTxt, targetCd, fallbackRowIndex)
     End Sub
 
-    Private Sub LoadUserGrid(ByVal sqlTxt As String, Optional ByVal targetCd As String = "")
+    Public Sub DspFirst(Optional ByVal targetCd As String = "")
+        LastSearchMode = 0
+        LastSearchText = ""
+        LastSearchOp = 0
+        RefreshUserGrid(targetCd)
+    End Sub
+
+    Public Sub FindUsr(ByVal Mode As Integer, ByVal defaultOp As Integer)
+        Dim fTxt As String = ""
+        Dim op As Integer = defaultOp
+        findDialog.FindInp(Mode, fTxt, op)
+        If op = -1 Then Return
+
+        If TrimX(fTxt) = "" Then op = 9
+
+        LastSearchMode = Mode
+        LastSearchText = fTxt
+        LastSearchOp = op
+
+        RefreshUserGrid("")
+    End Sub
+
+    Private Sub LoadUserGrid(ByVal sqlTxt As String, Optional ByVal targetCd As String = "", Optional ByVal fallbackRowIndex As Integer = -1)
         Try
             isUpdatingGrid = True
             Dim dt As DataTable = QueryDataTable(sqlTxt, CnMplMdb)
@@ -329,7 +366,12 @@ Public Class FrmMain
                 End If
 
                 If selectedRow Is Nothing AndAlso dgvUsr.Rows.Count > 0 Then
-                    selectedRow = dgvUsr.Rows(0)
+                    If fallbackRowIndex >= 0 Then
+                        Dim idx As Integer = Math.Min(fallbackRowIndex, dgvUsr.Rows.Count - 1)
+                        selectedRow = dgvUsr.Rows(idx)
+                    Else
+                        selectedRow = dgvUsr.Rows(0)
+                    End If
                 End If
 
                 If selectedRow IsNot Nothing Then
@@ -349,7 +391,6 @@ Public Class FrmMain
             MessageBox.Show("ユーザー検索中にエラーが発生しました: " & ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Warning)
         End Try
     End Sub
-
     Private Sub dgvUsr_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles dgvUsr.CellFormatting
         If e.RowIndex < 0 OrElse e.RowIndex >= dgvUsr.Rows.Count Then Return
         If dgvUsr.Columns.Contains("削除") Then
@@ -1165,20 +1206,27 @@ Public Class FrmMain
         Using dlg As New FrmUsrEdit()
             If dlg.LoadUserInfo(currentCode, $"{currentCode}  {txtSjName.Text}") Then
                 If dlg.ShowDialog(Me) = DialogResult.OK Then
-                DisplayUserDetails(currentCode)
-                dgvUsr.Invalidate()
-                ' 一覧グリッドの該当行の表示も更新
-                Dim cleanTarget As String = GetNumAlp(currentCode)
-                For Each row As DataGridViewRow In dgvUsr.Rows
-                    If GetNumAlp(NulCut(row.Cells("コード").Value)) = cleanTarget Then
-                        If dgvUsr.Columns.Contains("削除") Then row.Cells("削除").Value = dlg.SelectedDel
-                        If dgvUsr.Columns.Contains("支部名") Then row.Cells("支部名").Value = txtSibu.Text
-                        If dgvUsr.Columns.Contains("施術所名") Then row.Cells("施術所名").Value = txtSjName.Text
-                        If dgvUsr.Columns.Contains("柔整師名") Then row.Cells("柔整師名").Value = txtJsName.Text
-                        If dgvUsr.Columns.Contains("電話番号") Then row.Cells("電話番号").Value = txtTel.Text
-                        Exit For
+                    Dim newDel As String = dlg.SelectedDel
+                    If IsDelVisible(newDel) Then
+                        DisplayUserDetails(currentCode)
+                        dgvUsr.Invalidate()
+                        ' 一覧グリッドの該当行の表示も更新
+                        Dim cleanTarget As String = GetNumAlp(currentCode)
+                        For Each row As DataGridViewRow In dgvUsr.Rows
+                            If GetNumAlp(NulCut(row.Cells("コード").Value)) = cleanTarget Then
+                                If dgvUsr.Columns.Contains("削除") Then row.Cells("削除").Value = newDel
+                                If dgvUsr.Columns.Contains("支部名") Then row.Cells("支部名").Value = txtSibu.Text
+                                If dgvUsr.Columns.Contains("施術所名") Then row.Cells("施術所名").Value = txtSjName.Text
+                                If dgvUsr.Columns.Contains("柔整師名") Then row.Cells("柔整師名").Value = txtJsName.Text
+                                If dgvUsr.Columns.Contains("電話番号") Then row.Cells("電話番号").Value = txtTel.Text
+                                Exit For
+                            End If
+                        Next
+                    Else
+                        ' 表示対象外になった場合は自動除外（現在の行インデックス位置を引き継いでリフレッシュ）
+                        Dim curRowIdx As Integer = If(dgvUsr.CurrentRow IsNot Nothing, dgvUsr.CurrentRow.Index, -1)
+                        RefreshUserGrid("", curRowIdx)
                     End If
-                Next
                 End If
             End If
         End Using
@@ -1197,7 +1245,6 @@ Public Class FrmMain
             If dlg.LoadKisyuInfo(currentCode, $"{currentCode}  {txtSjName.Text}") Then
                 If dlg.ShowDialog(Me) = DialogResult.OK Then
                     DisplayUserDetails(currentCode)
-                dgvUsr.Invalidate()
                 End If
             End If
         End Using

@@ -494,6 +494,18 @@ Public Module MdlUsrdsp
         Return "((削除 = """ & DspNormal & """) or (削除 = """ & DspDelete & """) or (削除 = """ & DspSleep & """))"
     End Function
 
+    Public Function IsDelVisible(ByVal delVal As String) As Boolean
+        Dim v As String = TrimX(delVal)
+        Select Case v
+            Case "2"
+                Return (DspDelete = "2")
+            Case "3"
+                Return (DspSleep = "3")
+            Case Else
+                Return (DspNormal = "1")
+        End Select
+    End Function
+
     Public Function GetDspModeStatusText() As String
         Dim s As String = ""
         If DspNormal = "1" Then
